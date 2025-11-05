@@ -1,0 +1,117 @@
+# AWS Infrastructure Configuration
+
+# General Settings
+project_name: "ecg-monitor"
+environment: "poc"  # poc, dev, prod
+aws_region: "us-east-1"
+
+# S3 Buckets
+s3:
+  raw_data_bucket: "ecg-raw-data-${environment}"
+  processed_data_bucket: "ecg-processed-data-${environment}"
+  web_dashboard_bucket: "ecg-dashboard-${environment}"
+  retention_days: 90
+
+# DynamoDB Tables
+dynamodb:
+  sessions_table: "ecg-sessions"
+  alerts_table: "ecg-alerts"
+  analysis_table: "ecg-analysis"
+  billing_mode: "PAY_PER_REQUEST"  # or PROVISIONED
+  enable_point_in_time_recovery: false  # true for production
+  enable_streams: true
+
+# Lambda Functions
+lambda:
+  runtime: "python3.11"
+  timeout_seconds: 300  # 5 minutes max
+  memory_mb: 512
+
+  preprocessor:
+    name: "ecg-preprocessor"
+    memory_mb: 256
+    timeout_seconds: 60
+
+  ai_analyzer:
+    name: "ecg-ai-analyzer"
+    memory_mb: 1024
+    timeout_seconds: 300
+
+  alert_worker:
+    name: "ecg-alert-worker"
+    memory_mb: 256
+    timeout_seconds: 60
+
+  api_handler:
+    name: "ecg-api-handler"
+    memory_mb: 512
+    timeout_seconds: 30
+
+# SQS Queues
+sqs:
+  processing_queue: "ecg-processing-queue"
+  analysis_queue: "ecg-analysis-queue"
+  dlq: "ecg-dead-letter-queue"
+  visibility_timeout_seconds: 300
+  message_retention_seconds: 1209600  # 14 days
+  max_receive_count: 3
+
+# IoT Core
+iot_core:
+  thing_name: "ecg-device-001"
+  thing_type: "ecg-monitor"
+  policy_name: "ecg-device-policy"
+
+# API Gateway
+api_gateway:
+  name: "ecg-api"
+  stage: "v1"
+  throttle_rate_limit: 100
+  throttle_burst_limit: 200
+  enable_cors: true
+
+# CloudWatch
+cloudwatch:
+  log_retention_days: 30
+  enable_detailed_monitoring: true
+
+  alarms:
+    enable: true
+    lambda_error_threshold: 5
+    sqs_age_threshold_seconds: 300
+    email_notification: "your-email@example.com"
+
+# SES (Email Service)
+ses:
+  from_email: "noreply@yourdomain.com"
+  alert_email: "your-email@example.com"
+  region: "us-east-1"  # SES might be in different region
+
+# Claude API
+claude_api:
+  model: "claude-3-5-sonnet-20241022"
+  max_tokens: 4096
+  temperature: 0.3
+
+  analysis_prompts:
+    arrhythmia_detection: "ecg-arrhythmia-analysis"
+    pattern_recognition: "ecg-pattern-recognition"
+    daily_summary: "ecg-daily-summary"
+
+# Alert Thresholds
+alerts:
+  heart_rate:
+    min_bpm: 40
+    max_bpm: 180
+
+  arrhythmias:
+    enable: true
+    severity_levels: ["low", "medium", "high", "critical"]
+
+  notification_cooldown_minutes: 15  # Avoid alert spam
+
+# Cost Controls
+cost_controls:
+  enable_budget_alerts: true
+  monthly_budget_usd: 100
+  claude_api_max_calls_per_hour: 60
