@@ -11,6 +11,18 @@ alert_email = "your-email@example.com"
 # Your Anthropic Claude API key
 anthropic_api_key = "sk-ant-api03-..."
 
+# Cognito Authentication (required for production)
+# Add your dashboard URLs here
+cognito_callback_urls = [
+  "https://your-dashboard.vercel.app/callback",
+  "https://your-org-dashboard.vercel.app/callback"
+]
+
+cognito_logout_urls = [
+  "https://your-dashboard.vercel.app/",
+  "https://your-org-dashboard.vercel.app/"
+]
+
 # Optional: Override defaults
 # device_id               = "ecg-device-001"
 # ecg_sampling_rate       = 250
@@ -18,3 +30,5 @@ anthropic_api_key = "sk-ant-api03-..."
 # s3_retention_days       = 90
 # lambda_timeout          = 300
 # enable_detailed_monitoring = true
+# enable_mfa              = false  # Set to true for production
+# advanced_security       = true

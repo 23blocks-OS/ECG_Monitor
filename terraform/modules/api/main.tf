@@ -8,6 +8,19 @@ resource "aws_api_gateway_rest_api" "ecg_api" {
   }
 }
 
+# Cognito JWT Authorizer (optional)
+resource "aws_api_gateway_authorizer" "cognito" {
+  count = var.enable_cognito_auth ? 1 : 0
+
+  name          = "${var.project_name}-${var.environment}-cognito-authorizer"
+  rest_api_id   = aws_api_gateway_rest_api.ecg_api.id
+  type          = "COGNITO_USER_POOLS"
+  provider_arns = [var.cognito_user_pool_arn]
+
+  # Audience validation (optional)
+  # identity_source = "method.request.header.Authorization"
+}
+
 # CORS configuration
 resource "aws_api_gateway_gateway_response" "cors_4xx" {
   rest_api_id   = aws_api_gateway_rest_api.ecg_api.id
@@ -50,7 +63,8 @@ resource "aws_api_gateway_method" "live_get" {
   rest_api_id   = aws_api_gateway_rest_api.ecg_api.id
   resource_id   = aws_api_gateway_resource.live.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = var.enable_cognito_auth ? "COGNITO_USER_POOLS" : "NONE"
+  authorizer_id = var.enable_cognito_auth ? aws_api_gateway_authorizer.cognito[0].id : null
 }
 
 resource "aws_api_gateway_integration" "live_get" {
@@ -124,7 +138,8 @@ resource "aws_api_gateway_method" "alerts_get" {
   rest_api_id   = aws_api_gateway_rest_api.ecg_api.id
   resource_id   = aws_api_gateway_resource.alerts.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = var.enable_cognito_auth ? "COGNITO_USER_POOLS" : "NONE"
+  authorizer_id = var.enable_cognito_auth ? aws_api_gateway_authorizer.cognito[0].id : null
 }
 
 resource "aws_api_gateway_integration" "alerts_get" {
@@ -149,7 +164,8 @@ resource "aws_api_gateway_method" "history_get" {
   rest_api_id   = aws_api_gateway_rest_api.ecg_api.id
   resource_id   = aws_api_gateway_resource.history.id
   http_method   = "GET"
-  authorization = "NONE"
+  authorization = var.enable_cognito_auth ? "COGNITO_USER_POOLS" : "NONE"
+  authorizer_id = var.enable_cognito_auth ? aws_api_gateway_authorizer.cognito[0].id : null
 }
 
 resource "aws_api_gateway_integration" "history_get" {

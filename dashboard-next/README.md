@@ -76,9 +76,25 @@ Each card features:
 ```
 dashboard-next/
 ├── app/
-│   ├── layout.tsx          # Root layout
-│   ├── page.tsx            # Main dashboard page
+│   ├── layout.tsx          # Root layout with AuthProvider
+│   ├── page.tsx            # Main landing page
+│   ├── login/
+│   │   └── page.tsx        # Login page
+│   ├── signup/
+│   │   └── page.tsx        # Registration page
+│   ├── dashboard/
+│   │   └── page.tsx        # Protected dashboard
 │   └── globals.css         # Global styles & Tailwind
+├── src/
+│   ├── components/
+│   │   └── Auth/
+│   │       ├── AuthProvider.tsx    # Auth context provider
+│   │       ├── LoginForm.tsx       # Login form
+│   │       ├── SignUpForm.tsx      # Registration form
+│   │       ├── ProtectedRoute.tsx  # Route protection HOC
+│   │       └── index.ts            # Exports
+│   └── lib/
+│       └── auth.ts         # Amplify auth helpers
 ├── components/
 │   ├── AlertItem.tsx       # Alert card component
 │   ├── ECGChart.tsx        # Chart.js wrapper
@@ -92,6 +108,8 @@ dashboard-next/
 │   └── api.ts              # API client functions
 ├── types/
 │   └── index.ts            # TypeScript type definitions
+├── .env.local.example      # Environment config template
+├── AUTH_SETUP.md           # Authentication setup guide
 ├── next.config.js          # Next.js configuration
 ├── tailwind.config.ts      # Tailwind configuration
 ├── tsconfig.json           # TypeScript configuration
@@ -118,14 +136,49 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) to view the dashboard.
 
+### Authentication Setup
+
+The dashboard now includes **production-ready AWS Cognito authentication**:
+
+✅ Email/password authentication with JWT tokens
+✅ Email verification for new accounts
+✅ Password reset flow
+✅ Multi-factor authentication (MFA) support
+✅ Protected routes with role-based access control
+✅ Custom user attributes (organization_id, role)
+
+**To set up authentication:**
+
+1. Deploy Cognito infrastructure using Terraform (see [AUTH_SETUP.md](./AUTH_SETUP.md))
+2. Copy environment template: `cp .env.local.example .env.local`
+3. Fill in Cognito configuration from Terraform outputs
+4. Start the dev server: `npm run dev`
+
+**Authentication Routes:**
+- `/login` - Sign in page
+- `/signup` - Registration page (with email verification)
+- `/dashboard` - Protected dashboard (requires authentication)
+
+**📖 Full Setup Guide:** [AUTH_SETUP.md](./AUTH_SETUP.md)
+
 ### Environment Variables
 
 Create a `.env.local` file:
 
 ```env
-# Optional: API endpoint (defaults to mock data)
+# AWS Cognito Authentication (Required for production)
+NEXT_PUBLIC_AWS_REGION=us-east-1
+NEXT_PUBLIC_COGNITO_USER_POOL_ID=us-east-1_XXXXXXXXX
+NEXT_PUBLIC_COGNITO_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxx
+NEXT_PUBLIC_COGNITO_DOMAIN=https://your-domain.auth.us-east-1.amazoncognito.com
+NEXT_PUBLIC_REDIRECT_SIGN_IN=http://localhost:3000/callback
+NEXT_PUBLIC_REDIRECT_SIGN_OUT=http://localhost:3000/
+
+# API Configuration (Optional)
 NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
+
+See `.env.local.example` for full configuration options.
 
 ## Data Flow
 
