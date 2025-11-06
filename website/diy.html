@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIY Technical Setup - ECG Monitor</title>
+    <meta name="description" content="Build and customize ECG Monitor yourself. Complete control for developers and technical enthusiasts.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+                    <span class="logo">❤️</span>
+                    <span class="brand-name">ECG Monitor</span>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#choose-path">All Paths</a></li>
+                <li><a href="https://github.com/23blocks-OS/ECG_Monitor" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="journey-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>→</span>
+                <span>DIY Technical Setup</span>
+            </div>
+            <h1>🛠️ DIY Technical Setup</h1>
+            <p class="subtitle">Build and customize everything yourself. Full control and deep learning.</p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="journey-content">
+        <div class="container">
+            <!-- Overview -->
+            <div class="content-section">
+                <h2>For Developers & Technical Enthusiasts</h2>
+                <p>This path is for you if you want complete control over your ECG monitoring system, enjoy building things from scratch, and want to learn about IoT, cloud architecture, and AI integration. You'll set up everything manually and can customize every aspect of the system.</p>
+            </div>
+
+            <!-- What You'll Learn -->
+            <div class="content-section">
+                <h2>What You'll Learn</h2>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>🔌 IoT & Hardware</h4>
+                        <p>Raspberry Pi GPIO, SPI communication, ECG signal acquisition from ADS1293 chip</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>☁️ Cloud Architecture</h4>
+                        <p>AWS IoT Core, Lambda serverless, DynamoDB, S3, SQS, API Gateway</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>🤖 AI Integration</h4>
+                        <p>Claude API for medical analysis, prompt engineering for ECG interpretation</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>📊 Signal Processing</h4>
+                        <p>Digital filtering, noise reduction, QRS detection, HRV calculation</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>🏗️ Infrastructure as Code</h4>
+                        <p>Terraform for repeatable deployments, environment management</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>⚛️ Modern Frontend</h4>
+                        <p>Next.js 14, React 18, TypeScript, real-time data visualization</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prerequisites -->
+            <div class="content-section">
+                <h2>Prerequisites</h2>
+                <h3>Technical Skills Required</h3>
+                <ul>
+                    <li><strong>Intermediate to Advanced:</strong> Comfortable with command line, Git, and debugging</li>
+                    <li><strong>Languages:</strong> Python (for Raspberry Pi), TypeScript/JavaScript (for dashboards)</li>
+                    <li><strong>Cloud:</strong> AWS basics (IAM, CloudWatch, basic service understanding)</li>
+                    <li><strong>Infrastructure:</strong> Familiarity with Terraform or willingness to learn</li>
+                    <li><strong>Linux:</strong> Basic Linux administration for Raspberry Pi</li>
+                </ul>
+
+                <h3>Tools & Accounts</h3>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>AWS Account</h4>
+                        <p>Active account with billing enabled. You'll need IAM permissions for IoT, Lambda, DynamoDB, S3, SQS, API Gateway, CloudWatch, Secrets Manager.</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>AWS CLI</h4>
+                        <p>Version 2.x, configured with credentials (<code>aws configure</code>)</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Terraform</h4>
+                        <p>Version >= 1.5.0 for infrastructure deployment</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Claude API Key</h4>
+                        <p>Sign up at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Python</h4>
+                        <p>Version 3.9+ for Pi collector/streamer</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Node.js</h4>
+                        <p>Version 18+ for dashboard builds</p>
+                    </div>
+                </div>
+
+                <h3>Hardware</h3>
+                <table class="cost-table">
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Specification</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Raspberry Pi 4</td>
+                            <td>4GB RAM or higher recommended</td>
+                            <td>$55</td>
+                        </tr>
+                        <tr>
+                            <td>CJMCU-1293 ECG Module</td>
+                            <td>ADS1293 3-channel ECG AFE</td>
+                            <td>$25</td>
+                        </tr>
+                        <tr>
+                            <td>MicroSD Card</td>
+                            <td>32GB+ Class 10 or better</td>
+                            <td>$10</td>
+                        </tr>
+                        <tr>
+                            <td>Power Supply</td>
+                            <td>USB-C 5V/3A official power supply</td>
+                            <td>$10</td>
+                        </tr>
+                        <tr>
+                            <td>ECG Electrodes</td>
+                            <td>3-lead disposable or reusable</td>
+                            <td>$10</td>
+                        </tr>
+                        <tr>
+                            <td>Jumper Wires</td>
+                            <td>Female-to-female for SPI connection</td>
+                            <td>$5</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total Hardware Cost</th>
+                            <th></th>
+                            <th>~$115</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Your Journey -->
+            <div class="content-section">
+                <h2>Your Journey (3-5 Hours)</h2>
+                <ol class="steps-list">
+                    <li>
+                        <h4>Clone Repository & Explore</h4>
+                        <p>Clone the ECG_Monitor repo, read ARCHITECTURE.md and PROJECT_STRUCTURE.md to understand the system design. Review the technology choices in DESIGN_DECISIONS.md.</p>
+                        <pre><code>git clone https://github.com/23blocks-OS/ECG_Monitor.git
+cd ECG_Monitor
+cat ARCHITECTURE.md
+cat DESIGN_DECISIONS.md</code></pre>
+                    </li>
+
+                    <li>
+                        <h4>Configure Terraform Variables</h4>
+                        <p>Navigate to terraform/environments/poc/, copy the example config, and edit with your AWS region, email for alerts, and Claude API key.</p>
+                        <pre><code>cd terraform/environments/poc
+cp terraform.tfvars.example terraform.tfvars
+nano terraform.tfvars  # Edit your values</code></pre>
+                    </li>
+
+                    <li>
+                        <h4>Deploy AWS Infrastructure</h4>
+                        <p>Use the deploy script to build Lambda packages, deploy Terraform infrastructure, and generate Pi configuration. This creates IoT Core, Lambda functions, DynamoDB tables, S3 buckets, and API Gateway.</p>
+                        <pre><code>cd ../../..  # Back to project root
+./deploy.sh</code></pre>
+                        <p>This takes ~10-15 minutes. Save the Terraform outputs (IoT endpoint, API Gateway URL, etc.)</p>
+                    </li>
+
+                    <li>
+                        <h4>Set Up Raspberry Pi Hardware</h4>
+                        <p>Install Raspberry Pi OS, connect CJMCU-1293 via SPI (check docs/raspberry-pi-deployment.md for pinout), and enable SPI interface using raspi-config.</p>
+                    </li>
+
+                    <li>
+                        <h4>Configure Pi Collector & Streamer</h4>
+                        <p>Copy the generated config to your Pi, install Python dependencies, and set up AWS IoT certificates.</p>
+                        <pre><code>scp config/pi-config-deployed.yaml pi@raspberrypi:~/
+
+# On Raspberry Pi
+ssh pi@raspberrypi
+git clone https://github.com/23blocks-OS/ECG_Monitor.git
+cd ECG_Monitor/pi-collector
+pip3 install -r requirements.txt
+
+cd ../pi-streamer
+pip3 install -r requirements.txt
+
+mkdir -p ~/certs
+# Copy device.crt, device.key, AmazonRootCA1.pem from Terraform output</code></pre>
+                    </li>
+
+                    <li>
+                        <h4>Test Data Flow</h4>
+                        <p>Start collector and streamer, verify data reaches AWS using CloudWatch Logs and DynamoDB Console.</p>
+                        <pre><code>python3 pi-collector/main.py &
+python3 pi-streamer/main.py &
+
+# Check logs
+tail -f /var/log/ecg-monitor.log</code></pre>
+                    </li>
+
+                    <li>
+                        <h4>Deploy Web Dashboards</h4>
+                        <p>Build and deploy patient and provider portals to Vercel (or self-host on S3/CloudFront).</p>
+                        <pre><code># Patient Portal
+cd dashboard-next
+npm install
+vercel deploy --prod
+
+# Provider Portal
+cd ../dashboard-org
+npm install
+vercel deploy --prod</code></pre>
+                    </li>
+
+                    <li>
+                        <h4>Create Organization & Users</h4>
+                        <p>Use the Python scripts in scripts/create-organization.py to set up your organization, admin user, and initial patients in DynamoDB.</p>
+                    </li>
+
+                    <li>
+                        <h4>Customize & Extend</h4>
+                        <p>Now that everything works, customize the code! Adjust AI prompts in lambda/ai-analyzer/, modify dashboard UI, tune signal processing parameters, or integrate with your own systems.</p>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- What You Can Customize -->
+            <div class="content-section">
+                <h2>What You Can Customize</h2>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>Signal Processing</h4>
+                        <p>Adjust filtering parameters, sampling rates, QRS detection algorithms in pi-collector/signal_processor.py</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>AI Analysis</h4>
+                        <p>Modify Claude prompts for different analysis focus, add custom arrhythmia patterns, adjust confidence thresholds</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Dashboard UI</h4>
+                        <p>Rebrand colors, add custom visualizations, create new chart types, modify layouts</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Alert Logic</h4>
+                        <p>Change alert conditions, add SMS/Slack notifications, customize email templates</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Data Storage</h4>
+                        <p>Adjust retention policies, add new fields to DynamoDB schema, implement archival strategies</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Integrations</h4>
+                        <p>Connect to EMR/EHR systems, export to FHIR format, integrate with other health apps</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cost Breakdown -->
+            <div class="content-section">
+                <h2>Total Cost</h2>
+                <table class="cost-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Details</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hardware (one-time)</td>
+                            <td>Raspberry Pi + CJMCU-1293 + accessories</td>
+                            <td>$115</td>
+                        </tr>
+                        <tr>
+                            <td>AWS Services (monthly)</td>
+                            <td>IoT Core, Lambda, DynamoDB, S3, API Gateway</td>
+                            <td>$20-30</td>
+                        </tr>
+                        <tr>
+                            <td>Claude API (monthly)</td>
+                            <td>10% sampling = ~$8.64/day</td>
+                            <td>$20-50</td>
+                        </tr>
+                        <tr>
+                            <td>Electricity (monthly)</td>
+                            <td>Raspberry Pi 24/7 operation</td>
+                            <td>$2-5</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>First Month Total</th>
+                            <th></th>
+                            <th>$157-200</th>
+                        </tr>
+                        <tr>
+                            <th>Ongoing Monthly</th>
+                            <th></th>
+                            <th>$42-85</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Benefits -->
+            <div class="highlight-box">
+                <h2>Benefits of DIY Approach</h2>
+                <ul>
+                    <li>✅ <strong>Complete Control:</strong> Modify any part of the system to your needs</li>
+                    <li>✅ <strong>Learning Experience:</strong> Deep understanding of IoT, cloud, and AI</li>
+                    <li>✅ <strong>No Vendor Lock-In:</strong> Own your infrastructure and data</li>
+                    <li>✅ <strong>Contribute Back:</strong> Improve the open-source project</li>
+                    <li>✅ <strong>Lowest Cost:</strong> Pay only for infrastructure, no markup</li>
+                    <li>✅ <strong>Privacy:</strong> All data in your own AWS account</li>
+                    <li>✅ <strong>Customization:</strong> Adapt for specific research or use cases</li>
+                </ul>
+            </div>
+
+            <!-- Documentation -->
+            <div class="content-section">
+                <h2>Essential Documentation</h2>
+                <ul>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/ARCHITECTURE.md">ARCHITECTURE.md</a> - System design overview</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/BUILD_GUIDE.md">BUILD_GUIDE.md</a> - Detailed build instructions</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/PROJECT_STRUCTURE.md">PROJECT_STRUCTURE.md</a> - Code organization</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/DESIGN_DECISIONS.md">DESIGN_DECISIONS.md</a> - Why things work this way</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/DATA_FLOW.md">DATA_FLOW.md</a> - How data moves through the system</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/TESTING_GUIDE.md">TESTING_GUIDE.md</a> - Test scenarios and validation</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/docs/raspberry-pi-deployment.md">docs/raspberry-pi-deployment.md</a> - Pi-specific setup</li>
+                    <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/docs/aws-deployment.md">docs/aws-deployment.md</a> - AWS infrastructure details</li>
+                </ul>
+            </div>
+
+            <!-- CTA -->
+            <div class="highlight-box" style="text-align: center;">
+                <h2>Ready to Build?</h2>
+                <p style="margin-bottom: 20px;">Clone the repository and start your DIY journey today.</p>
+                <a href="https://github.com/23blocks-OS/ECG_Monitor" class="btn btn-primary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ECG Monitor</h4>
+                    <p>Open-source AI-powered ECG monitoring system</p>
+                    <p class="footer-author">Created by Juan Pelaez</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor">GitHub</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/LICENSE">License</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Other Paths</h4>
+                    <ul>
+                        <li><a href="easy-install.html">Click-and-Go</a></li>
+                        <li><a href="nonprofit.html">Nonprofit Healthcare</a></li>
+                        <li><a href="government.html">Government</a></li>
+                        <li><a href="medical-practice.html">Medical Practice</a></li>
+                        <li><a href="saas.html">Managed SaaS</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Juan Pelaez. Not a medical device. Research project only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

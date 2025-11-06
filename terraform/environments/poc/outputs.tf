@@ -58,3 +58,34 @@ output "claude_api_secret_arn" {
   value       = aws_secretsmanager_secret.claude_api.arn
   sensitive   = true
 }
+
+# Cognito Authentication Outputs
+output "cognito_user_pool_id" {
+  description = "Cognito User Pool ID"
+  value       = module.cognito.user_pool_id
+}
+
+output "cognito_user_pool_arn" {
+  description = "Cognito User Pool ARN"
+  value       = module.cognito.user_pool_arn
+}
+
+output "cognito_client_id" {
+  description = "Cognito User Pool Client ID (for frontend)"
+  value       = module.cognito.user_pool_client_id
+}
+
+output "cognito_domain" {
+  description = "Cognito Hosted UI domain"
+  value       = module.cognito.user_pool_domain
+}
+
+output "cognito_domain_url" {
+  description = "Full Cognito Hosted UI URL"
+  value       = module.cognito.cognito_domain_url
+}
+
+output "cognito_config_json" {
+  description = "Cognito configuration for frontend (JSON format)"
+  value       = jsonencode(module.cognito.cognito_config)
+}

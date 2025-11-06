@@ -62,3 +62,28 @@ variable "enable_detailed_monitoring" {
   type        = bool
   default     = true
 }
+
+# Cognito Authentication Variables
+variable "enable_mfa" {
+  description = "Enable Multi-Factor Authentication for Cognito"
+  type        = bool
+  default     = false  # Set to true for production
+}
+
+variable "advanced_security" {
+  description = "Enable Cognito advanced security features (bot detection, rate limiting)"
+  type        = bool
+  default     = true
+}
+
+variable "cognito_callback_urls" {
+  description = "Allowed callback URLs for OAuth (dashboard URLs)"
+  type        = list(string)
+  default     = []  # Will be populated from tfvars
+}
+
+variable "cognito_logout_urls" {
+  description = "Allowed logout URLs"
+  type        = list(string)
+  default     = []  # Will be populated from tfvars
+}

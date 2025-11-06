@@ -53,6 +53,27 @@ module "compute" {
   depends_on = [module.storage]
 }
 
+# Cognito Authentication Module
+module "cognito" {
+  source = "../../modules/cognito"
+
+  environment       = var.environment
+  enable_mfa        = var.enable_mfa
+  advanced_security = var.advanced_security
+
+  callback_urls = var.cognito_callback_urls
+  logout_urls   = var.cognito_logout_urls
+
+  access_token_validity  = 1   # 1 hour
+  id_token_validity      = 1   # 1 hour
+  refresh_token_validity = 30  # 30 days
+
+  tags = {
+    Project     = var.project_name
+    Environment = var.environment
+  }
+}
+
 # API Module
 module "api" {
   source = "../../modules/api"
@@ -64,7 +85,13 @@ module "api" {
   api_handler_lambda_invoke_arn  = module.compute.api_handler_lambda_invoke_arn
   api_handler_lambda_name        = module.compute.api_handler_lambda_name
 
-  depends_on = [module.compute]
+  # Cognito authentication
+  enable_cognito_auth    = true
+  cognito_user_pool_arn  = module.cognito.user_pool_arn
+  cognito_user_pool_id   = module.cognito.user_pool_id
+  cognito_client_id      = module.cognito.user_pool_client_id
+
+  depends_on = [module.compute, module.cognito]
 }
 
 # Connect IoT to processing pipeline
