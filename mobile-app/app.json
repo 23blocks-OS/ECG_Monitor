@@ -15,7 +15,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.ecgmonitor.mobile",
       "infoPlist": {
-        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "UIBackgroundModes": [
+          "bluetooth-central",
+          "fetch",
+          "remote-notification",
+          "processing"
+        ],
+        "NSBluetoothAlwaysUsageDescription": "This app uses Bluetooth to connect to your ECG monitoring device and receive real-time heart data.",
+        "NSBluetoothPeripheralUsageDescription": "This app uses Bluetooth to connect to your ECG monitoring device.",
         "NSHealthShareUsageDescription": "This app displays your ECG monitoring data",
         "NSHealthUpdateUsageDescription": "This app displays your ECG monitoring data"
       }
@@ -25,13 +32,44 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0a0a0a"
       },
-      "package": "com.ecgmonitor.mobile"
+      "package": "com.ecgmonitor.mobile",
+      "permissions": [
+        "BLUETOOTH",
+        "BLUETOOTH_ADMIN",
+        "BLUETOOTH_CONNECT",
+        "BLUETOOTH_SCAN",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "FOREGROUND_SERVICE",
+        "WAKE_LOCK",
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#ff0000",
+          "sounds": ["./assets/notification-sound.wav"]
+        }
+      ],
+      [
+        "expo-task-manager"
+      ],
+      [
+        "expo-background-fetch",
+        {
+          "ios": {
+            "minimumInterval": 15
+          }
+        }
+      ]
     ],
     "scheme": "ecgmonitor",
     "experiments": {

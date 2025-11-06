@@ -1,13 +1,83 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useECGData } from '@/hooks/useECGData';
 import { MetricCard } from '@/components/MetricCard';
 import { ECGChart } from '@/components/ECGChart';
+import { ConnectionStatus } from '@/components/ConnectionStatus';
 import { Colors } from '@/constants/Colors';
+import { useAppSelector, useAppDispatch } from '@/state/hooks';
+import { setBatch, setReceivingData } from '@/state/slices/ecgSlice';
+import { setBLEConnectionState, setCloudConnectionState } from '@/state/slices/connectionSlice';
+import BLEService from '@/services/BLEService';
+import CloudService from '@/services/CloudService';
+import NotificationService from '@/services/NotificationService';
 
 export default function DashboardScreen() {
+  const dispatch = useAppDispatch();
   const { liveData, isLoading, error, refresh } = useECGData();
+  const ecgData = useAppSelector((state) => state.ecg.liveData);
+  const bleConnection = useAppSelector((state) => state.connection.ble);
+  const cloudConnection = useAppSelector((state) => state.connection.cloud);
+  const settings = useAppSelector((state) => state.settings);
+
+  // Initialize services
+  useEffect(() => {
+    // Setup BLE service callbacks
+    BLEService.onDataReceived((batch) => {
+      console.log('Received ECG batch:', batch.batch_id);
+      dispatch(setBatch(batch));
+      dispatch(setReceivingData(true));
+
+      // Upload to cloud if auto-upload is enabled
+      if (settings.autoUpload) {
+        CloudService.uploadBatch(batch);
+      }
+    });
+
+    BLEService.onConnectionEstablished((device) => {
+      console.log('BLE connected:', device.name);
+      dispatch(setBLEConnectionState('connected'));
+      NotificationService.showNotification(
+        'Device Connected',
+        `Connected to ${device.name}`
+      );
+    });
+
+    BLEService.onConnectionLost(() => {
+      console.log('BLE connection lost');
+      dispatch(setBLEConnectionState('disconnected'));
+      dispatch(setReceivingData(false));
+      NotificationService.showNotification(
+        'Device Disconnected',
+        'Attempting to reconnect...'
+      );
+    });
+
+    // Setup Cloud service callbacks
+    CloudService.onConnectionChanged((connected) => {
+      dispatch(setCloudConnectionState(connected ? 'connected' : 'disconnected'));
+    });
+
+    CloudService.onAlert((alert) => {
+      NotificationService.showAlertNotification(alert);
+    });
+
+    // Request notification permissions
+    NotificationService.requestPermissions();
+
+    // Auto-connect to last paired device
+    if (settings.bleDeviceId) {
+      BLEService.connectToDevice(settings.bleDeviceId)
+        .then(() => BLEService.startDataStream())
+        .catch((error) => console.error('Auto-connect failed:', error));
+    }
+
+    // Cleanup
+    return () => {
+      // Services are singletons, no need to destroy on unmount
+    };
+  }, [dispatch, settings.autoUpload, settings.bleDeviceId]);
 
   if (isLoading && !liveData) {
     return (
@@ -50,16 +120,14 @@ export default function DashboardScreen() {
           />
         }
       >
-        {/* Header */}
+        {/* Header with Connection Status */}
         <View style={styles.header}>
-          <View style={styles.statusContainer}>
-            <View style={[styles.statusDot, status === 'active' && styles.statusActive]} />
-            <Text style={styles.statusText}>
-              {status === 'active' ? 'Connected' : 'Disconnected'}
-            </Text>
-          </View>
-          <Text style={styles.lastUpdate}>Updated: {lastUpdate}</Text>
+          <Text style={styles.headerTitle}>ECG Monitor</Text>
+          <ConnectionStatus compact />
         </View>
+
+        {/* Last Update */}
+        <Text style={styles.lastUpdate}>Updated: {lastUpdate}</Text>
 
         {/* Metrics */}
         <View style={styles.section}>
@@ -165,30 +233,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 12,
   },
-  statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  statusDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: Colors.dark.error,
-    marginRight: 8,
-  },
-  statusActive: {
-    backgroundColor: Colors.dark.success,
-  },
-  statusText: {
-    fontSize: 14,
-    fontWeight: '600',
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
     color: Colors.dark.text,
   },
   lastUpdate: {
     fontSize: 12,
     color: Colors.dark.textSecondary,
+    marginBottom: 16,
   },
   section: {
     marginBottom: 24,
