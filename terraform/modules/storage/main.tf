@@ -177,9 +177,21 @@ resource "aws_dynamodb_table" "sessions" {
     type = "N"
   }
 
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
   global_secondary_index {
     name            = "DeviceIndex"
     hash_key        = "device_id"
+    range_key       = "start_timestamp"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "UserIndex"
+    hash_key        = "user_id"
     range_key       = "start_timestamp"
     projection_type = "ALL"
   }
@@ -263,6 +275,130 @@ resource "aws_dynamodb_table" "analysis" {
 
   server_side_encryption {
     enabled = true
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for user profiles
+resource "aws_dynamodb_table" "users" {
+  name           = "${var.project_name}-${var.environment}-users"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "email"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "EmailIndex"
+    hash_key        = "email"
+    projection_type = "ALL"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+}
+
+# DynamoDB Table for blood pressure readings
+resource "aws_dynamodb_table" "blood_pressure" {
+  name           = "${var.project_name}-${var.environment}-blood-pressure"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for weight readings
+resource "aws_dynamodb_table" "weight" {
+  name           = "${var.project_name}-${var.environment}-weight"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for health journal entries
+resource "aws_dynamodb_table" "health_journal" {
+  name           = "${var.project_name}-${var.environment}-health-journal"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
   }
 
   ttl {

@@ -72,3 +72,43 @@ output "analysis_table_arn" {
   description = "Analysis table ARN"
   value       = aws_dynamodb_table.analysis.arn
 }
+
+output "users_table" {
+  description = "Users DynamoDB table name"
+  value       = aws_dynamodb_table.users.name
+}
+
+output "users_table_arn" {
+  description = "Users table ARN"
+  value       = aws_dynamodb_table.users.arn
+}
+
+output "blood_pressure_table" {
+  description = "Blood Pressure DynamoDB table name"
+  value       = aws_dynamodb_table.blood_pressure.name
+}
+
+output "blood_pressure_table_arn" {
+  description = "Blood Pressure table ARN"
+  value       = aws_dynamodb_table.blood_pressure.arn
+}
+
+output "weight_table" {
+  description = "Weight DynamoDB table name"
+  value       = aws_dynamodb_table.weight.name
+}
+
+output "weight_table_arn" {
+  description = "Weight table ARN"
+  value       = aws_dynamodb_table.weight.arn
+}
+
+output "health_journal_table" {
+  description = "Health Journal DynamoDB table name"
+  value       = aws_dynamodb_table.health_journal.name
+}
+
+output "health_journal_table_arn" {
+  description = "Health Journal table ARN"
+  value       = aws_dynamodb_table.health_journal.arn
+}
