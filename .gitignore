@@ -33,6 +33,9 @@ wheels/
 .installed.cfg
 *.egg
 
+# But allow Next.js lib directories
+!dashboard-next/lib/
+
 # Virtual environments
 venv/
 ENV/
