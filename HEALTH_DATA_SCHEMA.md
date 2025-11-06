@@ -31,11 +31,13 @@ All tables use:
 
 #### Global Secondary Indexes
 - **EmailIndex:** Partition key `email` - For user lookup by email address
+- **OrganizationIndex:** Partition key `organization_id` - For listing all users in an organization
 
 #### Attributes
 ```json
 {
   "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "organization_id": "org-uuid-v4",
   "email": "john.doe@example.com",
   "first_name": "John",
   "last_name": "Doe",
@@ -43,6 +45,7 @@ All tables use:
   "gender": "male",
   "height_cm": 178,
   "phone": "+1-555-0123",
+  "role": "patient",
   "emergency_contact": {
     "name": "Jane Doe",
     "phone": "+1-555-0124",
@@ -59,9 +62,15 @@ All tables use:
 }
 ```
 
+#### Field Descriptions
+- **organization_id** (String): UUID of organization/institution (optional for standalone deployments)
+- **role** (String): User role - patient | doctor | nurse | admin | caregiver
+- For standalone/personal deployments, set `organization_id` to "standalone" or omit it
+
 #### Query Patterns
 - Get user by ID: `GetItem` with `user_id`
 - Find user by email: Query `EmailIndex` with `email`
+- List all users in organization: Query `OrganizationIndex` with `organization_id`
 
 ---
 
@@ -278,22 +287,241 @@ response = dynamodb.query(
 
 ---
 
+### 5. Organizations Table
+
+**Table Name:** `{project}-{env}-organizations`
+**Purpose:** Manage organizations/institutions for multi-tenant deployments
+
+#### Primary Key
+- **Partition Key:** `organization_id` (String) - UUID identifier
+
+#### Global Secondary Indexes
+- **NameIndex:** Partition key `organization_name` - For organization lookup by name
+
+#### Attributes
+```json
+{
+  "organization_id": "org-550e8400-e29b-41d4-a716-446655440000",
+  "organization_name": "St. Mary's Hospital",
+  "organization_type": "hospital",
+  "address": {
+    "street": "123 Medical Center Drive",
+    "city": "Boston",
+    "state": "MA",
+    "zip": "02101",
+    "country": "USA"
+  },
+  "contact": {
+    "email": "admin@stmarys.hospital",
+    "phone": "+1-555-0100",
+    "website": "https://stmarys.hospital"
+  },
+  "settings": {
+    "timezone": "America/New_York",
+    "max_users": 1000,
+    "max_devices": 100,
+    "retention_days": 365
+  },
+  "subscription": {
+    "plan": "enterprise",
+    "status": "active",
+    "start_date": "2024-01-01",
+    "billing_contact": "billing@stmarys.hospital"
+  },
+  "created_at": 1699123456789,
+  "updated_at": 1699123456789,
+  "account_status": "active"
+}
+```
+
+#### Field Descriptions
+- **organization_type** (String): hospital | clinic | research | personal | home_health
+- **settings** (Object): Organization-specific configuration
+- **subscription** (Object): Billing and subscription information
+
+#### Query Patterns
+- Get organization by ID: `GetItem` with `organization_id`
+- Find organization by name: Query `NameIndex` with `organization_name`
+
+#### Usage
+For **standalone/personal deployments**, you can either:
+1. Create a single organization with `organization_id` = "standalone"
+2. Skip organization management entirely and use NULL/empty organization_id in users table
+
+---
+
+### 6. Device-Users Table
+
+**Table Name:** `{project}-{env}-device-users`
+**Purpose:** Map ECG devices to users (supports device sharing and reassignment)
+
+#### Primary Key
+- **Partition Key:** `device_id` (String) - Device identifier
+- **Sort Key:** `user_id` (String) - User identifier
+
+#### Global Secondary Indexes
+- **UserDeviceIndex:** Partition key `user_id`, Sort key `assignment_timestamp` - List all devices for a user
+
+#### Attributes
+```json
+{
+  "device_id": "ecg-device-001",
+  "user_id": "550e8400-e29b-41d4-a716-446655440000",
+  "assignment_id": "assignment-uuid-v4",
+  "assignment_timestamp": 1699123456789,
+  "assignment_type": "permanent",
+  "assigned_by": "admin-user-id",
+  "status": "active",
+  "notes": "Primary device for patient monitoring",
+  "unassignment_timestamp": null,
+  "ttl": null
+}
+```
+
+#### Field Descriptions
+- **assignment_type** (String): permanent | temporary | shared | pool
+- **status** (String): active | inactive | reassigned
+- **assigned_by** (String): User ID of admin who made the assignment
+- **unassignment_timestamp** (Number): When device was unassigned (if applicable)
+- **ttl** (Number): For temporary assignments, auto-expire the assignment
+
+#### Query Patterns
+- Get current user for a device: Query with `device_id` and filter by `status = "active"`
+- List all devices for a user: Query `UserDeviceIndex` with `user_id`
+- Get assignment history: Query with `device_id` (returns all past and current assignments)
+
+#### Example Queries
+```python
+# Get active user for a device
+response = dynamodb.query(
+    TableName='ecg-poc-device-users',
+    KeyConditionExpression='device_id = :did',
+    FilterExpression='#status = :active',
+    ExpressionAttributeNames={'#status': 'status'},
+    ExpressionAttributeValues={
+        ':did': 'ecg-device-001',
+        ':active': 'active'
+    }
+)
+current_user = response['Items'][0] if response['Items'] else None
+
+# List all devices for a user
+response = dynamodb.query(
+    TableName='ecg-poc-device-users',
+    IndexName='UserDeviceIndex',
+    KeyConditionExpression='user_id = :uid',
+    FilterExpression='#status = :active',
+    ExpressionAttributeNames={'#status': 'status'},
+    ExpressionAttributeValues={
+        ':uid': user_id,
+        ':active': 'active'
+    }
+)
+user_devices = response['Items']
+
+# Assign device to user
+dynamodb.put_item(
+    TableName='ecg-poc-device-users',
+    Item={
+        'device_id': 'ecg-device-001',
+        'user_id': user_id,
+        'assignment_id': str(uuid.uuid4()),
+        'assignment_timestamp': int(time.time() * 1000),
+        'assignment_type': 'permanent',
+        'assigned_by': admin_user_id,
+        'status': 'active',
+        'notes': 'Assigned during hospital admission'
+    }
+)
+
+# Unassign device (update status)
+dynamodb.update_item(
+    TableName='ecg-poc-device-users',
+    Key={
+        'device_id': 'ecg-device-001',
+        'user_id': user_id
+    },
+    UpdateExpression='SET #status = :inactive, unassignment_timestamp = :ts',
+    ExpressionAttributeNames={'#status': 'status'},
+    ExpressionAttributeValues={
+        ':inactive': 'inactive',
+        ':ts': int(time.time() * 1000)
+    }
+)
+```
+
+#### Device Assignment Workflows
+
+**Scenario 1: Personal/Home Use (1 device, 1 user)**
+- Create permanent assignment
+- No reassignment needed
+
+**Scenario 2: Hospital Ward (shared devices)**
+- Create temporary assignments with TTL
+- Assign device to patient during admission
+- Auto-expires after discharge
+- Can be reassigned to new patient
+
+**Scenario 3: Device Pool (multiple users share multiple devices)**
+- Track device checkout/checkin
+- Query available devices (no active assignments)
+- Assign temporarily when checked out
+
+---
+
 ## Integration with ECG Data
 
-### Updated Sessions Table
+### Updated ECG Tables with User Linking
 
-The `ecg-sessions` table now includes a `user_id` attribute and a new Global Secondary Index:
+All ECG-related tables now include `user_id` for multi-user support:
 
+#### 1. Sessions Table (`ecg-sessions`)
+**New Attribute:** `user_id` (String)
 **New GSI:** `UserIndex`
 - **Partition Key:** `user_id`
 - **Sort Key:** `start_timestamp`
 - **Projection:** ALL
 
-This allows querying all ECG sessions for a specific user:
+Query all ECG sessions for a user:
 ```python
 response = dynamodb.query(
     TableName='ecg-poc-sessions',
     IndexName='UserIndex',
+    KeyConditionExpression='user_id = :uid',
+    ExpressionAttributeValues={':uid': user_id}
+)
+```
+
+#### 2. Alerts Table (`ecg-alerts`)
+**New Attribute:** `user_id` (String)
+**New GSI:** `UserTimestampIndex`
+- **Partition Key:** `user_id`
+- **Sort Key:** `timestamp`
+- **Projection:** ALL
+
+Query all alerts for a user:
+```python
+response = dynamodb.query(
+    TableName='ecg-poc-alerts',
+    IndexName='UserTimestampIndex',
+    KeyConditionExpression='user_id = :uid',
+    ExpressionAttributeValues={':uid': user_id},
+    ScanIndexForward=False  # Most recent first
+)
+```
+
+#### 3. Analysis Table (`ecg-analysis`)
+**New Attribute:** `user_id` (String)
+**New GSI:** `UserAnalysisIndex`
+- **Partition Key:** `user_id`
+- **Sort Key:** `analysis_timestamp`
+- **Projection:** ALL
+
+Query all AI analysis results for a user:
+```python
+response = dynamodb.query(
+    TableName='ecg-poc-analysis',
+    IndexName='UserAnalysisIndex',
     KeyConditionExpression='user_id = :uid',
     ExpressionAttributeValues={':uid': user_id}
 )

@@ -112,3 +112,23 @@ output "health_journal_table_arn" {
   description = "Health Journal table ARN"
   value       = aws_dynamodb_table.health_journal.arn
 }
+
+output "organizations_table" {
+  description = "Organizations DynamoDB table name"
+  value       = aws_dynamodb_table.organizations.name
+}
+
+output "organizations_table_arn" {
+  description = "Organizations table ARN"
+  value       = aws_dynamodb_table.organizations.arn
+}
+
+output "device_users_table" {
+  description = "Device-Users mapping DynamoDB table name"
+  value       = aws_dynamodb_table.device_users.name
+}
+
+output "device_users_table_arn" {
+  description = "Device-Users mapping table ARN"
+  value       = aws_dynamodb_table.device_users.arn
+}
