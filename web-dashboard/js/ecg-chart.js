@@ -13,13 +13,28 @@ class ECGChartManager {
     initializeCharts() {
         const channels = ['1', '2', '3'];
         const colors = [
-            'rgb(239, 68, 68)',   // Red
-            'rgb(59, 130, 246)',  // Blue
-            'rgb(34, 197, 94)'    // Green
+            {
+                border: 'rgb(168, 85, 247)',    // Purple
+                gradient: ['rgba(168, 85, 247, 0.4)', 'rgba(168, 85, 247, 0.01)']
+            },
+            {
+                border: 'rgb(6, 182, 212)',      // Cyan
+                gradient: ['rgba(6, 182, 212, 0.4)', 'rgba(6, 182, 212, 0.01)']
+            },
+            {
+                border: 'rgb(236, 72, 153)',     // Pink
+                gradient: ['rgba(236, 72, 153, 0.4)', 'rgba(236, 72, 153, 0.01)']
+            }
         ];
 
         channels.forEach((channel, index) => {
-            const ctx = document.getElementById(`ecg-chart-${channel}`).getContext('2d');
+            const canvas = document.getElementById(`ecg-chart-${channel}`);
+            const ctx = canvas.getContext('2d');
+
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, colors[index].gradient[0]);
+            gradient.addColorStop(1, colors[index].gradient[1]);
 
             this.charts[`channel_${channel}`] = new Chart(ctx, {
                 type: 'line',
@@ -28,12 +43,13 @@ class ECGChartManager {
                     datasets: [{
                         label: `Lead ${['I', 'II', 'III'][index]}`,
                         data: Array(100).fill(0),
-                        borderColor: colors[index],
-                        backgroundColor: colors[index].replace('rgb', 'rgba').replace(')', ', 0.1)'),
-                        borderWidth: 2,
-                        tension: 0.4,
+                        borderColor: colors[index].border,
+                        backgroundColor: gradient,
+                        borderWidth: 2.5,
+                        tension: 0.3,
                         pointRadius: 0,
-                        fill: true
+                        fill: true,
+                        cubicInterpolationMode: 'monotone'
                     }]
                 },
                 options: {
@@ -42,14 +58,30 @@ class ECGChartManager {
                     animation: {
                         duration: 0 // Disable animation for real-time feel
                     },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
                     scales: {
                         x: {
-                            display: false
+                            display: false,
+                            grid: {
+                                display: false
+                            }
                         },
                         y: {
                             display: true,
                             grid: {
-                                color: 'rgba(0, 0, 0, 0.05)'
+                                color: 'rgba(255, 255, 255, 0.06)',
+                                drawBorder: false,
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.4)',
+                                font: {
+                                    size: 10
+                                },
+                                maxTicksLimit: 5
                             }
                         }
                     },

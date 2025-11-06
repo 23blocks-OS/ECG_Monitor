@@ -101,11 +101,18 @@ class ECGDashboardApp {
         const text = document.getElementById('connection-text');
 
         if (connected) {
-            indicator.className = 'status-indicator online';
             text.textContent = 'Connected';
+            text.classList.add('text-green-400');
+            text.classList.remove('text-red-400');
         } else {
-            indicator.className = 'status-indicator offline';
             text.textContent = 'Disconnected';
+            text.classList.add('text-red-400');
+            text.classList.remove('text-green-400');
+        }
+
+        // Trigger animation if available
+        if (window.animationController) {
+            window.animationController.pulseStatusIndicator(connected);
         }
     }
 
@@ -116,6 +123,14 @@ class ECGDashboardApp {
     }
 
     animateValue(element) {
+        // GSAP handles this now via mutation observer in animations.js
+        // Keeping this method for backward compatibility
+        if (typeof gsap !== 'undefined') {
+            // Animation handled by AnimationController
+            return;
+        }
+
+        // Fallback animation if GSAP not loaded
         element.style.transform = 'scale(1.1)';
         setTimeout(() => {
             element.style.transform = 'scale(1)';
