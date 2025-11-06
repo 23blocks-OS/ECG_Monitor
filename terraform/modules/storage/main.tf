@@ -177,9 +177,21 @@ resource "aws_dynamodb_table" "sessions" {
     type = "N"
   }
 
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
   global_secondary_index {
     name            = "DeviceIndex"
     hash_key        = "device_id"
+    range_key       = "start_timestamp"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "UserIndex"
+    hash_key        = "user_id"
     range_key       = "start_timestamp"
     projection_type = "ALL"
   }
@@ -221,9 +233,21 @@ resource "aws_dynamodb_table" "alerts" {
     type = "N"
   }
 
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
   global_secondary_index {
     name            = "DeviceTimestampIndex"
     hash_key        = "device_id"
+    range_key       = "timestamp"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "UserTimestampIndex"
+    hash_key        = "user_id"
     range_key       = "timestamp"
     projection_type = "ALL"
   }
@@ -254,6 +278,11 @@ resource "aws_dynamodb_table" "analysis" {
     type = "N"
   }
 
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
   global_secondary_index {
     name            = "DeviceAnalysisIndex"
     hash_key        = "device_id"
@@ -261,8 +290,224 @@ resource "aws_dynamodb_table" "analysis" {
     projection_type = "ALL"
   }
 
+  global_secondary_index {
+    name            = "UserAnalysisIndex"
+    hash_key        = "user_id"
+    range_key       = "analysis_timestamp"
+    projection_type = "ALL"
+  }
+
   server_side_encryption {
     enabled = true
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for user profiles
+resource "aws_dynamodb_table" "users" {
+  name           = "${var.project_name}-${var.environment}-users"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "email"
+    type = "S"
+  }
+
+  attribute {
+    name = "organization_id"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "EmailIndex"
+    hash_key        = "email"
+    projection_type = "ALL"
+  }
+
+  global_secondary_index {
+    name            = "OrganizationIndex"
+    hash_key        = "organization_id"
+    projection_type = "ALL"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+}
+
+# DynamoDB Table for blood pressure readings
+resource "aws_dynamodb_table" "blood_pressure" {
+  name           = "${var.project_name}-${var.environment}-blood-pressure"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for weight readings
+resource "aws_dynamodb_table" "weight" {
+  name           = "${var.project_name}-${var.environment}-weight"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for health journal entries
+resource "aws_dynamodb_table" "health_journal" {
+  name           = "${var.project_name}-${var.environment}-health-journal"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "user_id"
+  range_key      = "timestamp"
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "timestamp"
+    type = "N"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+}
+
+# DynamoDB Table for organizations/tenants
+resource "aws_dynamodb_table" "organizations" {
+  name           = "${var.project_name}-${var.environment}-organizations"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "organization_id"
+
+  attribute {
+    name = "organization_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "organization_name"
+    type = "S"
+  }
+
+  global_secondary_index {
+    name            = "NameIndex"
+    hash_key        = "organization_name"
+    projection_type = "ALL"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
+  }
+}
+
+# DynamoDB Table for device-user assignments
+resource "aws_dynamodb_table" "device_users" {
+  name           = "${var.project_name}-${var.environment}-device-users"
+  billing_mode   = "PAY_PER_REQUEST"
+  hash_key       = "device_id"
+  range_key      = "user_id"
+
+  attribute {
+    name = "device_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "user_id"
+    type = "S"
+  }
+
+  attribute {
+    name = "assignment_timestamp"
+    type = "N"
+  }
+
+  global_secondary_index {
+    name            = "UserDeviceIndex"
+    hash_key        = "user_id"
+    range_key       = "assignment_timestamp"
+    projection_type = "ALL"
+  }
+
+  server_side_encryption {
+    enabled = true
+  }
+
+  point_in_time_recovery {
+    enabled = false
   }
 
   ttl {
