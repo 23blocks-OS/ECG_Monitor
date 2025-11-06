@@ -1147,3 +1147,333 @@ a:hover {
 .mb-3 { margin-bottom: var(--spacing-lg); }
 
 .hidden { display: none; }
+
+/* ============================================
+   eBook Section
+   ============================================ */
+
+.ebook-section {
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 50%, #fff5f5 100%);
+    border-top: 2px solid #fecaca;
+    border-bottom: 2px solid #fecaca;
+}
+
+.ebook-nav-link {
+    color: #dc2626 !important;
+    font-weight: 600;
+}
+
+.ebook-banner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.ebook-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.ebook-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: fit-content;
+    box-shadow: var(--shadow-md);
+}
+
+.ebook-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #991b1b;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.ebook-subtitle {
+    font-size: 1.25rem;
+    color: var(--gray-700);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.ebook-story {
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid #dc2626;
+    box-shadow: var(--shadow-sm);
+}
+
+.ebook-story p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-700);
+    line-height: 1.7;
+}
+
+.ebook-story p:last-child {
+    margin-bottom: 0;
+}
+
+.ebook-mission {
+    color: #991b1b !important;
+    font-weight: 600;
+}
+
+.ebook-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.ebook-highlight {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.ebook-highlight:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.highlight-icon {
+    font-size: 1.5rem;
+}
+
+.ebook-cta {
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.ebook-note {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    font-style: italic;
+    text-align: center;
+}
+
+.ebook-impact {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid #2563eb;
+}
+
+.impact-quote {
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.ebook-visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.ebook-cover-placeholder {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ebook-cover-placeholder::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.cover-text {
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.cover-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.cover-ecg {
+    font-size: 2rem;
+    margin: var(--spacing-md) 0;
+    letter-spacing: 0.2em;
+}
+
+.cover-subtitle {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+.ebook-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+}
+
+.stat-item {
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border-top: 3px solid #dc2626;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #dc2626;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--gray-600);
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.ebook-sharing {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.ebook-sharing h3 {
+    font-size: 1.75rem;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-sm);
+}
+
+.ebook-sharing p {
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-lg);
+}
+
+.share-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.share-btn.twitter {
+    background: #1da1f2;
+    color: white;
+}
+
+.share-btn.twitter:hover {
+    background: #1a8cd8;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.share-btn.facebook {
+    background: #1877f2;
+    color: white;
+}
+
+.share-btn.facebook:hover {
+    background: #166fe5;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.share-btn.linkedin {
+    background: #0a66c2;
+    color: white;
+}
+
+.share-btn.linkedin:hover {
+    background: #095196;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Responsive eBook Section */
+@media (max-width: 768px) {
+    .ebook-banner {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .ebook-title {
+        font-size: 2rem;
+    }
+
+    .ebook-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .ebook-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cover-title {
+        font-size: 1.75rem;
+    }
+
+    .share-buttons {
+        flex-direction: column;
+    }
+
+    .share-btn {
+        width: 100%;
+    }
+}
