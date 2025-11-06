@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Monitor Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>⚡ ECG Monitor Dashboard</h1>
+            <div class="status">
+                <span id="connection-status" class="status-indicator offline">●</span>
+                <span id="connection-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Metrics Cards -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Heart Rate</div>
+                <div class="metric-value" id="heart-rate">--</div>
+                <div class="metric-unit">BPM</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">HRV (RMSSD)</div>
+                <div class="metric-value" id="hrv-rmssd">--</div>
+                <div class="metric-unit">ms</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Signal Quality</div>
+                <div class="metric-value" id="signal-quality">--</div>
+                <div class="metric-unit">%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Status</div>
+                <div class="metric-value status-text" id="device-status">Unknown</div>
+            </div>
+        </div>
+
+        <!-- ECG Waveform Charts -->
+        <div class="chart-container">
+            <h2>Real-time ECG Waveforms</h2>
+            <div class="ecg-chart">
+                <h3>Lead I</h3>
+                <canvas id="ecg-chart-1"></canvas>
+            </div>
+            <div class="ecg-chart">
+                <h3>Lead II</h3>
+                <canvas id="ecg-chart-2"></canvas>
+            </div>
+            <div class="ecg-chart">
+                <h3>Lead III</h3>
+                <canvas id="ecg-chart-3"></canvas>
+            </div>
+        </div>
+
+        <!-- Alerts Section -->
+        <div class="alerts-section">
+            <h2>Recent Alerts</h2>
+            <div id="alerts-container" class="alerts-container">
+                <p class="no-data">No alerts</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>ECG Monitor System • Last Updated: <span id="last-updated">Never</span></p>
+            <p class="disclaimer">⚠️ This is NOT a medical device. Always consult healthcare professionals.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api-client.js"></script>
+    <script src="js/ecg-chart.js"></script>
+    <script src="js/alerts.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

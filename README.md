@@ -34,46 +34,87 @@ A comprehensive IoT health monitoring system that runs on Raspberry Pi, streams 
 
 ## Quick Start
 
-### 1. Hardware Setup
-```bash
-# Connect CJMCU-1293 to Raspberry Pi via SPI
-# See docs/setup-raspberry-pi.md for detailed wiring
-```
+### 1. Prerequisites
 
-### 2. Raspberry Pi Setup
+- **Hardware:**
+  - Raspberry Pi 4 (or 3B+)
+  - CJMCU-1293 ECG module
+  - 3× ECG electrodes
+  - microSD card (32GB+)
+
+- **Software:**
+  - AWS Account with CLI configured
+  - Terraform >= 1.5.0
+  - Python 3.9+
+  - Anthropic Claude API key
+
+### 2. Configure
+
 ```bash
 # Clone repository
 git clone https://github.com/23blocks-OS/ECG_Monitor.git
 cd ECG_Monitor
 
+# Create Terraform configuration
+cd terraform/environments/poc
+cp terraform.tfvars.example terraform.tfvars
+
+# Edit terraform.tfvars with your values:
+# - alert_email (your email)
+# - anthropic_api_key (Claude API key)
+```
+
+### 3. Deploy to AWS
+
+```bash
+# Return to project root
+cd ../../..
+
+# Run automated deployment
+./deploy.sh
+
+# This will:
+# - Build Lambda packages
+# - Deploy Terraform infrastructure
+# - Upload web dashboard to S3
+# - Generate Pi configuration
+```
+
+### 4. Setup Raspberry Pi
+
+```bash
+# Copy generated config to Pi
+scp config/pi-config-deployed.yaml pi@raspberrypi:~/
+
+# On Raspberry Pi:
+ssh pi@raspberrypi
+
+# Clone repo and install
+git clone https://github.com/23blocks-OS/ECG_Monitor.git
+cd ECG_Monitor
+
 # Install dependencies
 cd pi-collector
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
-# Configure
-cp ../config/pi-config.yaml ../config/pi-config-local.yaml
-# Edit pi-config-local.yaml with your settings
+cd ../pi-streamer
+pip3 install -r requirements.txt
+
+# Setup certificates (from Terraform output)
+mkdir -p ~/certs
+# Copy device.crt, device.key, AmazonRootCA1.pem to ~/certs/
 ```
 
-### 3. AWS Deployment
-```bash
-# Deploy infrastructure
-cd aws-infrastructure
-./scripts/deploy.sh
+### 5. Run
 
-# Note your IoT endpoint and update Pi configuration
-```
-
-### 4. Run
 ```bash
-# On Raspberry Pi
-cd pi-collector
-python main.py
+# On Raspberry Pi - start both services
+cd ~/ECG_Monitor
+python3 pi-collector/main.py &
+python3 pi-streamer/main.py &
 
 # Open web dashboard
-# Visit: https://your-cloudfront-url.cloudfront.net
+# Visit: https://<cloudfront-url> (from terraform output)
 ```
 
 ---
@@ -90,23 +131,30 @@ python main.py
 
 ## Project Status
 
-🚧 **Status:** POC Development in Progress
+✅ **Status:** POC Complete - Ready for Testing
 
 ### Completed
-- ✅ Architecture design
-- ✅ Project structure
-- ✅ Configuration templates
-- ✅ Documentation framework
+- ✅ Architecture design & documentation
+- ✅ Terraform infrastructure (IoT, Lambda, DynamoDB, S3, API Gateway)
+- ✅ Raspberry Pi data collector (CJMCU-1293 SPI driver)
+- ✅ Cloud streamer (AWS IoT Core MQTT)
+- ✅ Lambda functions (4 functions):
+  - Preprocessor (metrics calculation)
+  - AI Analyzer (Claude 3.5 Sonnet integration)
+  - Alert Worker (email notifications)
+  - API Handler (REST endpoints)
+- ✅ Web dashboard (Chart.js visualization)
+- ✅ Deployment automation
 
-### In Progress
-- 🔄 Raspberry Pi data collector
-- 🔄 Cloud infrastructure
-- 🔄 Claude API integration
+### Testing
+- ⏳ End-to-end hardware testing
+- ⏳ Long-term stability testing
+- ⏳ Claude API accuracy validation
 
-### Planned
-- ⏳ Web dashboard
-- ⏳ Alert system
-- ⏳ End-to-end testing
+### Future Enhancements
+- ⏳ Mobile app
+- ⏳ Multi-user support
+- ⏳ Advanced ML models
 
 ---
 
