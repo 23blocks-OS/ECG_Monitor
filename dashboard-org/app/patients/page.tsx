@@ -5,6 +5,7 @@ import { useAuth } from '@/components/AuthWrapper';
 import PatientSearch from '@/components/PatientSearch';
 import PatientCard from '@/components/PatientCard';
 import OrganizationStats from '@/components/OrganizationStats';
+import OnboardingContainer from '@/components/onboarding/OnboardingContainer';
 import { Patient, PatientSummary } from '@/types';
 import { useRouter } from 'next/navigation';
 
@@ -80,6 +81,9 @@ export default function PatientsPage() {
 
   return (
     <div className="gradient-mesh min-h-screen text-white">
+      {/* Onboarding overlay - shows for first-time users */}
+      <OnboardingContainer />
+
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
         <div className="mb-8">

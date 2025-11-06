@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import MetricCard from '@/components/MetricCard';
 import ECGChart from '@/components/ECGChart';
 import AlertItem from '@/components/AlertItem';
+import OnboardingContainer from '@/components/onboarding/OnboardingContainer';
 import { useECGData } from '@/hooks/useECGData';
 import { usePageLoadAnimation } from '@/hooks/useAnimations';
 
@@ -17,6 +18,9 @@ export default function Dashboard() {
   return (
     <div className="gradient-mesh min-h-screen text-white overflow-x-hidden">
       <ParticlesBackground />
+
+      {/* Onboarding overlay - shows for first-time users */}
+      <OnboardingContainer />
 
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-7xl">
         <Header isConnected={isConnected} lastUpdated={lastUpdated} />

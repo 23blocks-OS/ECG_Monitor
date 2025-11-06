@@ -171,7 +171,11 @@ export default function PatientDashboard() {
             <ECGChart
               data={liveData?.waveform.channel_1 || []}
               label="Lead I"
-              color="rgba(236, 72, 153, 0.8)"
+              color={{
+                border: 'rgb(236, 72, 153)',
+                gradient: ['rgba(236, 72, 153, 0.4)', 'rgba(236, 72, 153, 0.01)'],
+              }}
+              badgeColor="text-pink-300"
             />
           </div>
 
@@ -183,7 +187,11 @@ export default function PatientDashboard() {
             <ECGChart
               data={liveData?.waveform.channel_2 || []}
               label="Lead II"
-              color="rgba(139, 92, 246, 0.8)"
+              color={{
+                border: 'rgb(139, 92, 246)',
+                gradient: ['rgba(139, 92, 246, 0.4)', 'rgba(139, 92, 246, 0.01)'],
+              }}
+              badgeColor="text-purple-300"
             />
           </div>
 
@@ -195,7 +203,11 @@ export default function PatientDashboard() {
             <ECGChart
               data={liveData?.waveform.channel_3 || []}
               label="Lead III"
-              color="rgba(6, 182, 212, 0.8)"
+              color={{
+                border: 'rgb(6, 182, 212)',
+                gradient: ['rgba(6, 182, 212, 0.4)', 'rgba(6, 182, 212, 0.01)'],
+              }}
+              badgeColor="text-cyan-300"
             />
           </div>
         </div>
