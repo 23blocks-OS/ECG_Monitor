@@ -1,12 +1,29 @@
 # ECG Monitor - AI-Powered Portable ECG System
 
-> Personal 24/7 heart monitoring with AI-powered arrhythmia detection using Claude API
+> Professional ECG monitoring for hospitals, clinics, and personal use - powered by AI
 
 **By Juan Pelaez**
 
+🎉 **NEW: Free for Medical Institutions, Non-Profits & Government Healthcare**
+
 ## Overview
 
-A comprehensive IoT health monitoring system that runs on Raspberry Pi, streams ECG data to AWS cloud, analyzes patterns using Claude AI, and provides real-time insights through a web dashboard. Designed to fill the gap left by consumer devices like Garmin that don't detect arrhythmias or use AI for pattern recognition.
+A comprehensive IoT health monitoring system that runs on Raspberry Pi, streams ECG data to AWS cloud, analyzes patterns using Claude AI, and provides real-time insights through dual web dashboards. Designed to fill the gap left by consumer devices like Garmin that don't detect arrhythmias or use AI for pattern recognition.
+
+### 🏥 Two Portal System
+
+**Provider Portal** (`dashboard-org`) - For Healthcare Professionals
+- Monitor multiple patients from a single dashboard
+- Search and select patients within your organization
+- View real-time ECG data for any patient
+- Track organization-wide statistics
+- Manage shared device pools
+
+**Patient Portal** (`dashboard-next`) - For Individual Patients
+- Personal health dashboard
+- View own ECG recordings and metrics
+- Access health history and AI insights
+- Track progress over time
 
 ### Key Features
 
@@ -153,8 +170,53 @@ python3 pi-streamer/main.py &
 
 ### Future Enhancements
 - ⏳ Mobile app
-- ⏳ Multi-user support
+- ✅ Multi-user support (COMPLETED - Provider Portal launched)
+- ✅ Organization management (COMPLETED)
 - ⏳ Advanced ML models
+- ⏳ Integration with EMR/EHR systems
+
+---
+
+## 🏥 For Healthcare Organizations
+
+### Quick Start for Clinics
+
+**Want to deploy this for your clinic, hospital, or healthcare organization?**
+
+📋 [Clinic Quick Start Guide](CLINIC_QUICK_START.md) - Get running in 2 hours
+📖 [Full Deployment Guide](ORGANIZATION_DEPLOYMENT_GUIDE.md) - Comprehensive setup
+
+### Why Use This for Your Organization?
+
+✅ **100% Free** - No licensing costs for medical institutions, non-profits, government
+✅ **Complete System** - Both provider and patient portals included
+✅ **Low Operating Cost** - ~$30/month AWS for small clinic (20 patients)
+✅ **Own Your Data** - Deploy in your own AWS account, full control
+✅ **HIPAA-Ready** - Encryption, access controls, audit logging built-in
+✅ **Open Source** - Customize to your needs, no vendor lock-in
+
+### What You Get
+
+- **Provider Portal** for doctors/nurses to monitor all patients
+- **Patient Portal** for patients to view their own data
+- **Multi-patient support** with organization management
+- **Device pool management** for shared ECG monitors
+- **Role-based access** (admin, doctor, nurse, patient)
+- **Organization statistics** dashboard
+- **Patient search** and selection
+- **Real-time ECG monitoring** for all patients
+
+### Cost Breakdown
+
+**Small Clinic (20 patients, 5 devices)**
+- AWS: ~$30-50/month
+- Hardware: $115 per device (one-time)
+- License: **$0** (free for medical/non-profit)
+
+**Medium Hospital (200 patients, 50 devices)**
+- AWS: ~$100-150/month
+- Hardware: $5,750 (50 devices, one-time)
+- License: **$0** (free for medical/non-profit)
 
 ---
 
@@ -196,7 +258,20 @@ This is a personal project, but suggestions and feedback are welcome!
 
 ## License
 
-MIT License - See [LICENSE](LICENSE) for details
+**Dual-Use License**
+
+This software is free for:
+- ✅ **Medical institutions** (hospitals, clinics, medical practices)
+- ✅ **Non-profit organizations** providing healthcare
+- ✅ **Government healthcare facilities**
+- ✅ **Research institutions** (with IRB approval)
+- ✅ **Personal use**
+
+For commercial/for-profit use, a commercial license is required.
+
+See [LICENSE](LICENSE) for full details.
+
+**Important**: This is NOT a medical device and is NOT FDA approved. Always consult healthcare professionals and follow standard clinical protocols.
 
 ---
 
