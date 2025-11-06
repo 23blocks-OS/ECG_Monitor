@@ -1,0 +1,336 @@
+# ECG Monitor Dual-Use License
+
+**Version 1.0 - November 2025**
+
+Copyright (c) 2024-2025 Juan Pelaez / 23blocks-OS
+
+---
+
+## Overview
+
+This software is made available under a **dual-use licensing model** to support healthcare accessibility while protecting commercial interests:
+
+- **FREE** for medical institutions, non-profit organizations, government entities, research institutions, and personal use
+- **Commercial license required** for for-profit business use
+
+---
+
+## FREE USE LICENSE
+
+### Eligible Organizations and Individuals
+
+The following entities may use this software **free of charge** without obtaining a commercial license:
+
+1. **Medical Institutions**
+   - Hospitals
+   - Clinics
+   - Medical practices
+   - Healthcare facilities
+   - Urgent care centers
+   - Specialty medical centers
+
+2. **Non-Profit Organizations**
+   - 501(c)(3) organizations (US) or equivalent non-profit status in other countries
+   - Healthcare charities
+   - Community health centers
+   - Non-profit research organizations
+   - Educational institutions providing healthcare services
+
+3. **Government Entities**
+   - Government-run hospitals and clinics
+   - Public health departments
+   - Veterans Affairs (VA) facilities
+   - Military medical facilities
+   - Municipal health services
+   - State/provincial health services
+
+4. **Research Institutions**
+   - Universities and colleges
+   - Academic research labs
+   - Non-profit research foundations
+   - **Note:** Must have appropriate IRB (Institutional Review Board) approval for human subjects research
+
+5. **Personal/Individual Use**
+   - Individuals using the system for personal health monitoring
+   - Families using the system at home
+   - Non-commercial personal projects
+
+### Terms and Conditions for Free Use
+
+Permission is hereby granted, free of charge, to eligible organizations and individuals described above, to use, copy, modify, merge, publish, distribute, and/or sublicense the software, subject to the following conditions:
+
+#### 1. Attribution
+- The copyright notice and this license must be included in all copies or substantial portions of the Software.
+- Any modifications must be clearly documented.
+- Proper credit must be given to the original author (Juan Pelaez / 23blocks-OS).
+
+#### 2. Non-Commercial Use
+- The software may NOT be used as part of a for-profit business operation.
+- This includes but is not limited to:
+  - Selling monitoring services for profit
+  - Incorporating into commercial products
+  - Using to generate revenue (except cost recovery)
+  - Commercial consulting or service delivery
+
+#### 3. Medical Device Disclaimer
+- **CRITICAL**: This software is **NOT** a medical device.
+- This software is **NOT** FDA approved, CE marked, or approved by any regulatory body.
+- This software is **NOT** intended for:
+  - Clinical diagnosis
+  - Treatment decisions
+  - Emergency medical response
+  - Life-critical applications
+- Users must:
+  - Consult with legal and regulatory authorities before deployment
+  - Obtain proper informed consent from patients
+  - Follow all applicable healthcare regulations (HIPAA, GDPR, etc.)
+  - Use clinical judgment and follow standard medical protocols
+
+#### 4. Liability
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, MEDICAL OUTCOMES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+#### 5. Data Privacy and Security
+Users are responsible for:
+- Compliance with HIPAA (US), GDPR (EU), and other applicable data protection laws
+- Implementing appropriate security measures
+- Protecting patient health information (PHI)
+- Maintaining audit logs and access controls
+
+---
+
+## COMMERCIAL USE LICENSE
+
+### When a Commercial License is Required
+
+A commercial license is required if:
+
+1. **For-Profit Business Use**
+   - The software is used by or on behalf of a for-profit company
+   - The software is incorporated into commercial products or services
+   - The software is used to generate revenue (beyond cost recovery)
+
+2. **Commercial Healthcare Services**
+   - Private for-profit hospitals or clinics (unless serving as non-profit)
+   - Commercial telemedicine platforms
+   - Healthcare-as-a-service providers
+   - Medical device manufacturers
+
+3. **Reselling or White-Labeling**
+   - Reselling the software or derived products
+   - White-labeling the software for other organizations
+   - Offering the software as a managed service for profit
+
+### Obtaining a Commercial License
+
+To obtain a commercial license:
+
+1. **Contact**: Send an email to [Your Email Here] or open an issue at https://github.com/23blocks-OS/ECG_Monitor
+2. **Provide**:
+   - Organization name and type
+   - Intended use case
+   - Expected scale (number of users/patients)
+   - Geographic region
+3. **Negotiate**: Commercial licenses are available on reasonable terms
+4. **License Fee**: Based on organization size and use case (contact for pricing)
+
+**Benefits of Commercial License**:
+- Full commercial rights to use, modify, and distribute
+- Priority support
+- Custom feature development available
+- SLA (Service Level Agreement) options
+- Legal indemnification options
+
+---
+
+## FREQUENTLY ASKED QUESTIONS
+
+### Q: I run a small private practice. Do I need a commercial license?
+**A:** If your practice is structured as a for-profit entity, yes. However, if you're a solo practitioner using this for patient care (not as a revenue-generating product), contact us for clarification. We may grant an exception or offer a reduced-cost license.
+
+### Q: We're a non-profit clinic. How do we prove non-profit status?
+**A:** Simply use the software. No formal proof is required initially. If audited, you would need to provide 501(c)(3) documentation or equivalent.
+
+### Q: Can I modify the code and contribute back?
+**A:** Yes! We encourage contributions. All contributed code becomes part of the project under these same licensing terms.
+
+### Q: Can hospitals use this even though they charge patients?
+**A:** Yes, if the hospital is:
+- A non-profit medical institution
+- A government-run facility
+- Operating primarily for patient care (not software sales)
+
+Charging patients for medical services is fine. Charging for the software as a product requires a commercial license.
+
+### Q: What about research institutions that receive private funding?
+**A:** Research institutions (universities, etc.) can use this free under the research provision, regardless of funding source, provided they have IRB approval for human subjects.
+
+### Q: I want to use this in a startup health tech company. What do I do?
+**A:** Contact us for a commercial license. We offer reasonable terms for startups.
+
+### Q: Can I see the cost of a commercial license before deciding?
+**A:** Yes, contact us and we'll provide pricing based on your specific use case.
+
+---
+
+## COMPLIANCE AND ENFORCEMENT
+
+### Self-Reporting
+We operate on an honor system. Organizations are expected to:
+- Use the software according to the terms of this license
+- Self-identify if commercial use applies
+- Contact us proactively if unsure about licensing requirements
+
+### Audit Rights
+We reserve the right to:
+- Request verification of non-profit or government status
+- Audit compliance with license terms
+- Require migration to commercial license if terms are violated
+
+### Violations
+Unauthorized commercial use may result in:
+- Request for immediate licensing or cessation of use
+- Legal action for copyright infringement
+- Damages calculated based on unauthorized commercial benefit
+
+---
+
+## MODIFICATIONS AND DERIVATIVES
+
+### Open Source Contributions
+- Contributions to the main repository are welcome
+- Contributors grant the same dual-license rights to their contributions
+- Derivative works must maintain this licensing structure
+
+### Private Modifications
+- Organizations may modify the software for internal use
+- Modified versions used commercially require a commercial license
+- Sharing modified versions publicly must retain this license
+
+---
+
+## THIRD-PARTY COMPONENTS
+
+This software includes or may use third-party open-source components, each with their own licenses:
+
+- AWS SDK (Apache License 2.0)
+- Anthropic Claude API (Commercial API, separate terms)
+- Next.js (MIT License)
+- React (MIT License)
+- Chart.js (MIT License)
+- Python libraries (various open-source licenses)
+
+Users are responsible for compliance with all third-party licenses.
+
+---
+
+## TERMINATION
+
+This license automatically terminates if:
+- You violate any terms of this license
+- You fail to obtain a required commercial license
+- You use the software in a manner that causes harm or violates laws
+
+Upon termination, you must immediately:
+- Cease all use of the software
+- Delete all copies in your possession
+- Notify any downstream users (if applicable)
+
+---
+
+## DISCLAIMER OF LIABILITY
+
+**MEDICAL DISCLAIMER**
+
+THIS SOFTWARE IS NOT A MEDICAL DEVICE. IT IS PROVIDED FOR INFORMATIONAL, EDUCATIONAL, AND MONITORING PURPOSES ONLY.
+
+- **NOT INTENDED** for clinical diagnosis, treatment, or life-critical decisions
+- **NOT FDA APPROVED** or approved by any medical device regulatory body
+- **NO WARRANTY** of accuracy, reliability, or fitness for medical use
+- **USERS ASSUME ALL RISK** associated with use of this software
+- **ALWAYS** consult qualified healthcare professionals for medical decisions
+- **ALWAYS** follow standard clinical protocols and regulatory requirements
+
+**GENERAL LIABILITY DISCLAIMER**
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW:
+- NO WARRANTIES of any kind, express or implied
+- NO LIABILITY for damages, medical outcomes, data loss, or other harm
+- NO GUARANTEE of uptime, availability, or functionality
+- NO SUPPORT obligations (except under commercial license agreements)
+
+**HIPAA AND DATA PROTECTION**
+
+Users are solely responsible for:
+- HIPAA compliance (if applicable)
+- GDPR compliance (if applicable)
+- All data protection and privacy laws
+- Securing patient health information
+- Obtaining required consents and authorizations
+
+---
+
+## GOVERNING LAW
+
+This license shall be governed by and construed in accordance with the laws of [Your State/Country], without regard to its conflict of law provisions.
+
+Any disputes arising from this license shall be resolved in the courts of [Your Jurisdiction].
+
+---
+
+## CONTACT INFORMATION
+
+**For Licensing Questions:**
+- **Email**: [Your Email]
+- **GitHub**: https://github.com/23blocks-OS/ECG_Monitor/issues
+- **Project**: https://github.com/23blocks-OS/ECG_Monitor
+
+**For Support:**
+- Free users: Community support via GitHub Issues
+- Commercial license holders: Priority support per agreement
+
+---
+
+## LICENSE ACCEPTANCE
+
+**By using this software, you acknowledge that:**
+
+1. You have read and understood this license
+2. You agree to be bound by its terms
+3. You will use the software only as permitted by this license
+4. You understand this is not a medical device
+5. You accept all risks and disclaimers
+6. You will comply with all applicable laws and regulations
+
+**If you do not agree to these terms, do not use this software.**
+
+---
+
+## UPDATES TO THIS LICENSE
+
+We reserve the right to update this license. Changes will be:
+- Posted to the GitHub repository
+- Effective for new users immediately
+- Grandfathered for existing users for 90 days
+
+Users are responsible for checking for license updates periodically.
+
+---
+
+**Last Updated**: November 6, 2025
+**License Version**: 1.0
+
+---
+
+For a simplified summary:
+- ✅ **FREE**: Medical institutions, non-profits, government, research, personal use
+- ❌ **COMMERCIAL LICENSE REQUIRED**: For-profit businesses, commercial healthcare services
+- ⚠️ **NOT A MEDICAL DEVICE**: Use at your own risk, consult healthcare professionals
+
+**Thank you for supporting accessible healthcare technology!**
+
+---
+
+**Copyright (c) 2024-2025 Juan Pelaez / 23blocks-OS**
+All rights reserved under this dual-use license.
