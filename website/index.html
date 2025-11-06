@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECG Monitor - AI-Powered Portable ECG System</title>
+    <meta name="description" content="Professional ECG monitoring for hospitals, clinics, and personal use. Free for medical institutions, non-profits, and government healthcare.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">❤️</span>
+                <span class="brand-name">ECG Monitor</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#choose-path">Get Started</a></li>
+                <li><a href="https://github.com/23blocks-OS/ECG_Monitor" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI-Powered ECG Monitoring for Everyone</h1>
+                <p class="hero-subtitle">Professional cardiac monitoring powered by Raspberry Pi, AWS Cloud, and Claude AI</p>
+                <div class="hero-badge">🎉 Free for Medical Institutions, Non-Profits & Government Healthcare</div>
+                <div class="hero-cta">
+                    <a href="#choose-path" class="btn btn-primary">Choose Your Path</a>
+                    <a href="https://github.com/23blocks-OS/ECG_Monitor" class="btn btn-secondary">View on GitHub</a>
+                </div>
+                <p class="hero-author">Created by <strong>Juan Pelaez</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why ECG Monitor?</h2>
+            <p class="section-subtitle">Filling the gap left by consumer devices</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Claude 3.5 Sonnet detects arrhythmias and patterns that consumer devices miss</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Medical-Grade Quality</h3>
+                    <p>3-lead ECG at 250-500 Hz sampling rate with professional signal processing</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Infrastructure</h3>
+                    <p>AWS serverless architecture for scalable, reliable data processing</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Dashboards</h3>
+                    <p>Provider and patient portals with live ECG visualization and insights</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Your Data, Your Control</h3>
+                    <p>Deploy in your own AWS account. Full encryption and access control</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Affordable</h3>
+                    <p>$115 hardware + $25-85/month operating cost. Free licensing for healthcare</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Edge + Cloud Hybrid Architecture</p>
+
+            <div class="architecture-diagram">
+                <div class="arch-step">
+                    <div class="arch-icon">🫀</div>
+                    <h4>1. Data Capture</h4>
+                    <p>Raspberry Pi + CJMCU-1293 ECG module captures 3-lead cardiac signals</p>
+                </div>
+
+                <div class="arch-arrow">→</div>
+
+                <div class="arch-step">
+                    <div class="arch-icon">📡</div>
+                    <h4>2. Stream to Cloud</h4>
+                    <p>MQTT over TLS to AWS IoT Core with offline buffering</p>
+                </div>
+
+                <div class="arch-arrow">→</div>
+
+                <div class="arch-step">
+                    <div class="arch-icon">🧠</div>
+                    <h4>3. AI Analysis</h4>
+                    <p>Lambda + Claude AI detects arrhythmias and patterns</p>
+                </div>
+
+                <div class="arch-arrow">→</div>
+
+                <div class="arch-step">
+                    <div class="arch-icon">📱</div>
+                    <h4>4. Real-Time Insights</h4>
+                    <p>Web dashboards with alerts and recommendations</p>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h3>Technology Stack</h3>
+                <div class="tech-badges">
+                    <span class="tech-badge">Raspberry Pi</span>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">AWS IoT Core</span>
+                    <span class="tech-badge">Lambda</span>
+                    <span class="tech-badge">DynamoDB</span>
+                    <span class="tech-badge">Claude AI</span>
+                    <span class="tech-badge">Next.js</span>
+                    <span class="tech-badge">React</span>
+                    <span class="tech-badge">TypeScript</span>
+                    <span class="tech-badge">Terraform</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Choose Your Path -->
+    <section id="choose-path" class="choose-path">
+        <div class="container">
+            <h2 class="section-title">Choose Your Path</h2>
+            <p class="section-subtitle">Different journeys for different needs</p>
+
+            <div class="path-grid">
+                <!-- DIY Technical User -->
+                <a href="diy.html" class="path-card">
+                    <div class="path-icon">🛠️</div>
+                    <h3>DIY Technical User</h3>
+                    <p>Build and customize everything yourself. Full control and learning.</p>
+                    <ul class="path-features">
+                        <li>Complete customization</li>
+                        <li>Learn IoT & cloud architecture</li>
+                        <li>Contribute to open source</li>
+                        <li>3-5 hours setup time</li>
+                    </ul>
+                    <span class="path-cta">Explore DIY →</span>
+                </a>
+
+                <!-- Click-and-Go -->
+                <a href="easy-install.html" class="path-card featured">
+                    <div class="path-badge">Most Popular</div>
+                    <div class="path-icon">🚀</div>
+                    <h3>Click-and-Go</h3>
+                    <p>One-click installation wizard. Minimal technical knowledge required.</p>
+                    <ul class="path-features">
+                        <li>Interactive installer</li>
+                        <li>15-20 minute setup</li>
+                        <li>Guided questionnaire</li>
+                        <li>Automatic deployment</li>
+                    </ul>
+                    <span class="path-cta">Quick Start →</span>
+                </a>
+
+                <!-- Nonprofit Healthcare -->
+                <a href="nonprofit.html" class="path-card">
+                    <div class="path-icon">🏥</div>
+                    <h3>Nonprofit Healthcare</h3>
+                    <p>Free for clinics serving underserved communities. Zero licensing costs.</p>
+                    <ul class="path-features">
+                        <li>100% free licensing</li>
+                        <li>Multi-patient monitoring</li>
+                        <li>$25-50/month operating cost</li>
+                        <li>2-hour setup</li>
+                    </ul>
+                    <span class="path-cta">Nonprofit Guide →</span>
+                </a>
+
+                <!-- Government -->
+                <a href="government.html" class="path-card">
+                    <div class="path-icon">🏛️</div>
+                    <h3>Government Institution</h3>
+                    <p>Free for public health facilities. Data sovereignty and compliance ready.</p>
+                    <ul class="path-features">
+                        <li>No licensing fees</li>
+                        <li>Deploy in GovCloud</li>
+                        <li>Compliance ready</li>
+                        <li>Scalable infrastructure</li>
+                    </ul>
+                    <span class="path-cta">Government Guide →</span>
+                </a>
+
+                <!-- Medical Practice -->
+                <a href="medical-practice.html" class="path-card">
+                    <div class="path-icon">🩺</div>
+                    <h3>Medical Practice</h3>
+                    <p>Private practices with clear licensing. HIPAA-ready infrastructure.</p>
+                    <ul class="path-features">
+                        <li>Free for non-profit practices</li>
+                        <li>Commercial license available</li>
+                        <li>AI-powered analysis</li>
+                        <li>Provider dashboard</li>
+                    </ul>
+                    <span class="path-cta">Practice Guide →</span>
+                </a>
+
+                <!-- SaaS -->
+                <a href="saas.html" class="path-card">
+                    <div class="path-badge">Coming Soon</div>
+                    <div class="path-icon">💳</div>
+                    <h3>Managed SaaS</h3>
+                    <p>Fully managed service with device delivery. Zero setup required.</p>
+                    <ul class="path-features">
+                        <li>Pre-configured devices</li>
+                        <li>Managed cloud infrastructure</li>
+                        <li>Technical support included</li>
+                        <li>From $29/month</li>
+                    </ul>
+                    <span class="path-cta">Join Waitlist →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">$115</div>
+                    <div class="stat-label">Hardware Cost</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$25-85</div>
+                    <div class="stat-label">Monthly Operating</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">250-500 Hz</div>
+                    <div class="stat-label">Sampling Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3-Lead</div>
+                    <div class="stat-label">ECG Channels</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Safety Disclaimer -->
+    <section class="disclaimer">
+        <div class="container">
+            <div class="disclaimer-box">
+                <h3>⚠️ Important Safety Notice</h3>
+                <p>This is a <strong>personal research project</strong>, not a medical device. It is <strong>NOT intended for clinical diagnosis or treatment</strong> and is <strong>NOT FDA approved or CE marked</strong>. Always consult healthcare professionals for medical decisions. Use at your own risk.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Get Started?</h2>
+            <p>Choose your path and start monitoring cardiac health in hours, not months.</p>
+            <div class="cta-buttons">
+                <a href="#choose-path" class="btn btn-primary btn-large">Choose Your Path</a>
+                <a href="https://github.com/23blocks-OS/ECG_Monitor" class="btn btn-secondary btn-large">View Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ECG Monitor</h4>
+                    <p>Open-source AI-powered ECG monitoring system</p>
+                    <p class="footer-author">Created by Juan Pelaez</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor">GitHub Repository</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/README.md">Documentation</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/blob/main/LICENSE">License</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/issues">Issues</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>User Journeys</h4>
+                    <ul>
+                        <li><a href="diy.html">DIY Technical User</a></li>
+                        <li><a href="easy-install.html">Click-and-Go</a></li>
+                        <li><a href="nonprofit.html">Nonprofit Healthcare</a></li>
+                        <li><a href="government.html">Government</a></li>
+                        <li><a href="medical-practice.html">Medical Practice</a></li>
+                        <li><a href="saas.html">Managed SaaS</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>License</h4>
+                    <p><strong>Free for:</strong></p>
+                    <ul class="license-list">
+                        <li>Medical institutions</li>
+                        <li>Non-profit healthcare</li>
+                        <li>Government facilities</li>
+                        <li>Research institutions</li>
+                        <li>Personal use</li>
+                    </ul>
+                    <p class="commercial-note">Commercial license available for for-profit use</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Juan Pelaez. Licensed under dual-use terms.</p>
+                <p>Not a medical device. Not FDA approved. Research project only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
