@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Open-source AI-powered portable ECG monitoring system with Raspberry Pi, AWS cloud, and Claude AI for 24/7 heart activity tracking and arrhythmia detection.">
+    <meta name="keywords" content="ECG, heart monitor, Raspberry Pi, Claude AI, AWS, IoT, health monitoring, arrhythmia detection">
+    <meta name="author" content="Juan Pelaez">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ECG Monitor - AI-Powered Portable ECG System">
+    <meta property="og:description" content="Open-source 24/7 heart monitoring with AI-powered arrhythmia detection">
+
+    <title>ECG Monitor - AI-Powered Portable ECG System</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/website.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <div class="nav-brand">
+                <span class="pulse-icon">❤️</span>
+                <span class="brand-text">ECG Monitor</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#architecture">Architecture</a>
+                <a href="#getting-started">Get Started</a>
+                <a href="#docs">Docs</a>
+                <a href="https://github.com/23blocks-OS/ECG_Monitor" class="github-link" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">Open Source • AI-Powered • Real-Time</div>
+                <h1 class="hero-title">
+                    Personal <span class="gradient-text">ECG Monitor</span>
+                    <br>with AI Intelligence
+                </h1>
+                <p class="hero-description">
+                    24/7 heart activity monitoring using Raspberry Pi, AWS Cloud, and Claude AI.
+                    Detect arrhythmias and patterns that consumer devices miss.
+                </p>
+                <div class="hero-cta">
+                    <a href="#getting-started" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/23blocks-OS/ECG_Monitor" class="btn btn-secondary" target="_blank">
+                        View on GitHub
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">250 Hz</div>
+                        <div class="stat-label">Sampling Rate</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">3-Lead</div>
+                        <div class="stat-label">ECG Channels</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">Real-Time</div>
+                        <div class="stat-label">Analysis</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Monitoring</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="ecg-preview">
+                    <div class="ecg-card">
+                        <div class="ecg-header">
+                            <span class="status-indicator"></span>
+                            <span>Live ECG</span>
+                        </div>
+                        <canvas id="heroECG" width="400" height="200"></canvas>
+                        <div class="ecg-metrics">
+                            <div class="metric">
+                                <div class="metric-label">Heart Rate</div>
+                                <div class="metric-value"><span id="heroHR">72</span> BPM</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-label">HRV</div>
+                                <div class="metric-value"><span id="heroHRV">45</span> ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why ECG Monitor?</h2>
+                <p class="section-subtitle">
+                    Beyond basic heart rate tracking. Detect what consumer devices can't.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Claude 3.5 Sonnet analyzes ECG metrics to detect arrhythmias, AFib, PVCs, and patterns that traditional devices miss.</p>
+                    <ul class="feature-list">
+                        <li>Atrial Fibrillation detection</li>
+                        <li>PVC identification</li>
+                        <li>Heart rate variability analysis</li>
+                        <li>Pattern recognition (rest/exercise)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-Time Monitoring</h3>
+                    <p>Continuous 24/7 heart monitoring with near real-time web dashboard displaying waveforms, metrics, and alerts.</p>
+                    <ul class="feature-list">
+                        <li>250 Hz sampling rate</li>
+                        <li>3-lead ECG configuration</li>
+                        <li>5-second dashboard updates</li>
+                        <li>Live waveform visualization</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3>Cloud Infrastructure</h3>
+                    <p>Scalable AWS architecture with IoT Core, Lambda, DynamoDB, and S3 for reliable data processing and storage.</p>
+                    <ul class="feature-list">
+                        <li>Serverless compute (Lambda)</li>
+                        <li>Real-time data streaming (IoT Core)</li>
+                        <li>Automatic scaling</li>
+                        <li>Cost optimized (~$45-85/month)</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Intelligent Alerts</h3>
+                    <p>Email notifications when anomalies are detected, with severity levels and 15-minute cooldown to prevent spam.</p>
+                    <ul class="feature-list">
+                        <li>4 severity levels (low to critical)</li>
+                        <li>HTML email templates</li>
+                        <li>Smart cooldown logic</li>
+                        <li>Actionable recommendations</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏃</div>
+                    <h3>Exercise Tracking</h3>
+                    <p>Monitor heart activity during workouts. AI distinguishes between rest, exercise, and stress patterns.</p>
+                    <ul class="feature-list">
+                        <li>Activity pattern detection</li>
+                        <li>Exercise vs rest classification</li>
+                        <li>Stress indicator analysis</li>
+                        <li>Recovery monitoring</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Privacy & Control</h3>
+                    <p>Your data, your infrastructure. Deploy to your own AWS account with complete control and security.</p>
+                    <ul class="feature-list">
+                        <li>Self-hosted on your AWS</li>
+                        <li>X.509 certificate authentication</li>
+                        <li>Encrypted data transmission</li>
+                        <li>No third-party data sharing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">System Architecture</h2>
+                <p class="section-subtitle">
+                    End-to-end pipeline from hardware to insights
+                </p>
+            </div>
+
+            <div class="architecture-diagram">
+                <div class="arch-layer">
+                    <div class="arch-layer-title">Edge Device</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <div class="arch-icon">🫀</div>
+                            <div class="arch-name">CJMCU-1293</div>
+                            <div class="arch-desc">3-channel ECG AFE</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">📊</div>
+                            <div class="arch-name">Collector</div>
+                            <div class="arch-desc">SPI, Filtering</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">📡</div>
+                            <div class="arch-name">Streamer</div>
+                            <div class="arch-desc">MQTT, Compression</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-divider">↓</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">AWS Cloud</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <div class="arch-icon">🌐</div>
+                            <div class="arch-name">IoT Core</div>
+                            <div class="arch-desc">MQTT Ingestion</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">⚙️</div>
+                            <div class="arch-name">Lambda</div>
+                            <div class="arch-desc">Processing</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🗄️</div>
+                            <div class="arch-name">Storage</div>
+                            <div class="arch-desc">S3, DynamoDB</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arch-divider">↓</div>
+
+                <div class="arch-layer">
+                    <div class="arch-layer-title">AI & Analysis</div>
+                    <div class="arch-components">
+                        <div class="arch-component">
+                            <div class="arch-icon">🤖</div>
+                            <div class="arch-name">Claude AI</div>
+                            <div class="arch-desc">Arrhythmia Detection</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">🚨</div>
+                            <div class="arch-name">Alerts</div>
+                            <div class="arch-desc">Email (SES)</div>
+                        </div>
+                        <div class="arch-arrow">→</div>
+                        <div class="arch-component">
+                            <div class="arch-icon">📱</div>
+                            <div class="arch-name">Dashboard</div>
+                            <div class="arch-desc">Real-time UI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-stack">
+                <h3>Technology Stack</h3>
+                <div class="tech-categories">
+                    <div class="tech-category">
+                        <div class="tech-category-title">Edge</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python 3.9+</span>
+                            <span class="tech-tag">SPI</span>
+                            <span class="tech-tag">MQTT</span>
+                            <span class="tech-tag">Raspberry Pi</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">Cloud</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">AWS IoT Core</span>
+                            <span class="tech-tag">Lambda</span>
+                            <span class="tech-tag">DynamoDB</span>
+                            <span class="tech-tag">S3</span>
+                            <span class="tech-tag">API Gateway</span>
+                            <span class="tech-tag">SQS</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">AI</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Claude 3.5 Sonnet</span>
+                            <span class="tech-tag">Anthropic API</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">Frontend</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Chart.js</span>
+                            <span class="tech-tag">CloudFront</span>
+                        </div>
+                    </div>
+                    <div class="tech-category">
+                        <div class="tech-category-title">IaC</div>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Terraform</span>
+                            <span class="tech-tag">Bash</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" class="section getting-started-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get Started in Minutes</h2>
+                <p class="section-subtitle">
+                    Deploy your personal ECG monitoring system
+                </p>
+            </div>
+
+            <div class="getting-started-content">
+                <div class="getting-started-tabs">
+                    <button class="tab-btn active" data-tab="aws">AWS Deployment</button>
+                    <button class="tab-btn" data-tab="pi">Raspberry Pi Setup</button>
+                    <button class="tab-btn" data-tab="test">Testing</button>
+                </div>
+
+                <div class="tab-content active" id="tab-aws">
+                    <div class="step-by-step">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Clone Repository</h4>
+                                <div class="code-block">
+                                    <code>git clone https://github.com/23blocks-OS/ECG_Monitor.git
+cd ECG_Monitor</code>
+                                    <button class="copy-btn" data-copy="git clone https://github.com/23blocks-OS/ECG_Monitor.git&#10;cd ECG_Monitor">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Configure AWS & API Keys</h4>
+                                <div class="code-block">
+                                    <code># Configure AWS CLI
+aws configure
+
+# Set Claude API key
+export CLAUDE_API_KEY="your-api-key-here"</code>
+                                    <button class="copy-btn" data-copy="aws configure">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Deploy with Terraform</h4>
+                                <div class="code-block">
+                                    <code>cd terraform/environments/poc
+terraform init
+terraform apply</code>
+                                    <button class="copy-btn" data-copy="cd terraform/environments/poc&#10;terraform init&#10;terraform apply">Copy</button>
+                                </div>
+                                <p class="step-note">Or use the automated deploy script: <code>./deploy.sh</code></p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Verify Deployment</h4>
+                                <div class="code-block">
+                                    <code># Check IoT endpoint
+terraform output iot_endpoint
+
+# Open dashboard
+terraform output dashboard_url</code>
+                                    <button class="copy-btn" data-copy="terraform output iot_endpoint">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-pi">
+                    <div class="step-by-step">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Prepare Raspberry Pi</h4>
+                                <p>Install Raspberry Pi OS (64-bit recommended) and enable SSH</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Transfer Files</h4>
+                                <div class="code-block">
+                                    <code>scp -r ECG_Monitor pi@raspberrypi.local:/home/pi/</code>
+                                    <button class="copy-btn" data-copy="scp -r ECG_Monitor pi@raspberrypi.local:/home/pi/">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Run Automated Setup</h4>
+                                <div class="code-block">
+                                    <code>ssh pi@raspberrypi.local
+cd ECG_Monitor/pi-collector
+./setup_pi.sh</code>
+                                    <button class="copy-btn" data-copy="ssh pi@raspberrypi.local&#10;cd ECG_Monitor/pi-collector&#10;./setup_pi.sh">Copy</button>
+                                </div>
+                                <p class="step-note">Setup takes ~15 minutes. Script handles all dependencies and configuration.</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Start Services</h4>
+                                <div class="code-block">
+                                    <code>sudo systemctl enable ecg-collector ecg-streamer
+sudo systemctl start ecg-collector ecg-streamer</code>
+                                    <button class="copy-btn" data-copy="sudo systemctl enable ecg-collector ecg-streamer&#10;sudo systemctl start ecg-collector ecg-streamer">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-test">
+                    <div class="step-by-step">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Generate Test Data</h4>
+                                <div class="code-block">
+                                    <code>cd tests/data
+python3 generate_test_data.py</code>
+                                    <button class="copy-btn" data-copy="cd tests/data&#10;python3 generate_test_data.py">Copy</button>
+                                </div>
+                                <p class="step-note">Creates 14 test files with realistic ECG waveforms (normal, PVC, AFib, tachycardia)</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Run System Simulator</h4>
+                                <div class="code-block">
+                                    <code>cd tests/simulators
+python3 ecg_system_simulator.py --scenario afib</code>
+                                    <button class="copy-btn" data-copy="cd tests/simulators&#10;python3 ecg_system_simulator.py --scenario afib">Copy</button>
+                                </div>
+                                <p class="step-note">Simulates end-to-end pipeline from Pi to dashboard</p>
+                            </div>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Run Integration Tests</h4>
+                                <div class="code-block">
+                                    <code>cd tests/integration
+./test_end_to_end.sh</code>
+                                    <button class="copy-btn" data-copy="cd tests/integration&#10;./test_end_to_end.sh">Copy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="deployment-time">
+                <div class="time-estimate">
+                    <div class="time-icon">⏱️</div>
+                    <div class="time-content">
+                        <div class="time-label">Total Deployment Time</div>
+                        <div class="time-value">45-60 minutes</div>
+                        <div class="time-breakdown">AWS: 30 min • Raspberry Pi: 15 min • Testing: 5 min</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="section docs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Documentation</h2>
+                <p class="section-subtitle">
+                    Comprehensive guides for every step
+                </p>
+            </div>
+
+            <div class="docs-grid">
+                <a href="raspberry-pi-deployment.md" class="doc-card">
+                    <div class="doc-icon">🥧</div>
+                    <h3>Raspberry Pi Deployment</h3>
+                    <p>Complete guide for deploying software on Raspberry Pi with CJMCU-1293 hardware setup, systemd services, and troubleshooting.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">Hardware</span>
+                        <span class="doc-tag">Setup</span>
+                        <span class="doc-time">60 min read</span>
+                    </div>
+                </a>
+
+                <a href="aws-deployment.md" class="doc-card">
+                    <div class="doc-icon">☁️</div>
+                    <h3>AWS Deployment</h3>
+                    <p>Step-by-step AWS infrastructure setup with Terraform, IoT Core configuration, Lambda deployment, and cost optimization.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">Cloud</span>
+                        <span class="doc-tag">Terraform</span>
+                        <span class="doc-time">45 min read</span>
+                    </div>
+                </a>
+
+                <a href="ai-analysis.md" class="doc-card">
+                    <div class="doc-icon">🤖</div>
+                    <h3>AI Analysis</h3>
+                    <p>Understanding Claude AI integration, prompts, analysis criteria, arrhythmia detection logic, and cost optimization strategies.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">AI</span>
+                        <span class="doc-tag">Analysis</span>
+                        <span class="doc-time">30 min read</span>
+                    </div>
+                </a>
+
+                <a href="pi-quick-reference.md" class="doc-card">
+                    <div class="doc-icon">📋</div>
+                    <h3>Quick Reference</h3>
+                    <p>One-page reference card with essential commands, troubleshooting tips, and monitoring procedures for Raspberry Pi.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">Reference</span>
+                        <span class="doc-tag">Commands</span>
+                        <span class="doc-time">5 min read</span>
+                    </div>
+                </a>
+
+                <a href="../ARCHITECTURE.md" class="doc-card">
+                    <div class="doc-icon">🏗️</div>
+                    <h3>System Architecture</h3>
+                    <p>Detailed architecture overview, component descriptions, data flow pipeline, and technology stack decisions.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">Architecture</span>
+                        <span class="doc-tag">Design</span>
+                        <span class="doc-time">20 min read</span>
+                    </div>
+                </a>
+
+                <a href="../TESTING_GUIDE.md" class="doc-card">
+                    <div class="doc-icon">🧪</div>
+                    <h3>Testing Guide</h3>
+                    <p>Test data generation, system simulation, integration testing, and verification procedures without hardware.</p>
+                    <div class="doc-meta">
+                        <span class="doc-tag">Testing</span>
+                        <span class="doc-tag">QA</span>
+                        <span class="doc-time">15 min read</span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="docs-footer">
+                <p>Can't find what you're looking for?</p>
+                <a href="https://github.com/23blocks-OS/ECG_Monitor/issues" class="btn btn-outline" target="_blank">
+                    Open an Issue
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Build Your ECG Monitor?</h2>
+                <p>Join the community of developers creating open-source health monitoring solutions</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/23blocks-OS/ECG_Monitor" class="btn btn-primary btn-lg" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                        View on GitHub
+                    </a>
+                    <a href="#getting-started" class="btn btn-secondary btn-lg">
+                        Read Documentation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ECG Monitor</h4>
+                    <p>Open-source AI-powered portable ECG monitoring system</p>
+                    <p class="footer-author">Created by <a href="https://github.com/23blocks-OS" target="_blank">Juan Pelaez</a></p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul class="footer-links">
+                        <li><a href="#getting-started">Getting Started</a></li>
+                        <li><a href="raspberry-pi-deployment.md">Raspberry Pi Setup</a></li>
+                        <li><a href="aws-deployment.md">AWS Deployment</a></li>
+                        <li><a href="ai-analysis.md">AI Analysis</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="../ARCHITECTURE.md">Architecture</a></li>
+                        <li><a href="../TESTING_GUIDE.md">Testing Guide</a></li>
+                        <li><a href="../README.md">README</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/issues" target="_blank">Report Issues</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/pulls" target="_blank">Pull Requests</a></li>
+                        <li><a href="https://github.com/23blocks-OS/ECG_Monitor/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 ECG Monitor. Open source under MIT License.</p>
+                <p class="footer-disclaimer">
+                    ⚠️ For personal health monitoring only. Not for medical diagnosis. Consult healthcare professionals for medical decisions.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/website.js"></script>
+</body>
+</html>

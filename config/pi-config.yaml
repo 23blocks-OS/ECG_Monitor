@@ -1,0 +1,64 @@
+# Raspberry Pi ECG Collector Configuration
+
+# Hardware Configuration
+hardware:
+  device: "CJMCU-1293"
+  chip: "ADS1293"
+  spi_bus: 0
+  spi_device: 0
+  spi_speed_hz: 1000000  # 1 MHz
+  gpio_reset_pin: 17
+  gpio_drdy_pin: 27  # Data Ready pin
+
+# ECG Sampling Configuration
+ecg:
+  channels: 3
+  sampling_rate_hz: 250  # Standard ECG sampling rate
+  resolution_bits: 24
+  gain: 6  # Programmable gain
+  enable_internal_reference: true
+
+# Signal Processing
+processing:
+  enable_notch_filter: true  # 50/60 Hz noise
+  notch_frequency_hz: 60
+  enable_bandpass_filter: true
+  bandpass_low_hz: 0.5
+  bandpass_high_hz: 40
+
+# Data Buffering
+buffer:
+  size_seconds: 30  # Buffer 30 seconds locally
+  enable_disk_cache: true
+  cache_directory: "/var/ecg_cache"
+  max_cache_size_mb: 500
+
+# Cloud Streaming
+streaming:
+  batch_size_seconds: 10  # Send 10-second batches
+  compression: true
+  compression_algorithm: "gzip"
+  retry_attempts: 3
+  retry_backoff_seconds: [2, 4, 8]
+
+# AWS IoT Core Connection
+aws_iot:
+  endpoint: "your-iot-endpoint.iot.us-east-1.amazonaws.com"
+  client_id: "ecg-device-001"
+  topic_prefix: "ecg/device001"
+  cert_path: "/home/pi/certs/device.crt"
+  key_path: "/home/pi/certs/device.key"
+  ca_path: "/home/pi/certs/AmazonRootCA1.pem"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file_path: "/var/log/ecg_monitor.log"
+  max_file_size_mb: 100
+  backup_count: 5
+
+# Health Monitoring
+health:
+  enable_watchdog: true
+  heartbeat_interval_seconds: 60
+  auto_restart_on_failure: true
