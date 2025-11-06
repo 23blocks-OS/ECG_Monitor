@@ -51,21 +51,59 @@ A comprehensive IoT health monitoring system that runs on Raspberry Pi, streams 
 
 ## Quick Start
 
-### 1. Prerequisites
+### 🚀 One-Click Installation (Recommended)
 
-- **Hardware:**
-  - Raspberry Pi 4 (or 3B+)
-  - CJMCU-1293 ECG module
-  - 3× ECG electrodes
-  - microSD card (32GB+)
+The easiest way to get started! Interactive wizard handles everything:
 
-- **Software:**
-  - AWS Account with CLI configured
-  - Terraform >= 1.5.0
-  - Python 3.9+
-  - Anthropic Claude API key
+```bash
+# Clone repository
+git clone https://github.com/23blocks-OS/ECG_Monitor.git
+cd ECG_Monitor
 
-### 2. Configure
+# Run the installer
+./install.sh
+```
+
+The installer will:
+- ✅ Validate prerequisites (AWS CLI, Terraform, Python)
+- ✅ Guide you through configuration questions
+- ✅ Deploy complete AWS infrastructure automatically
+- ✅ Generate Raspberry Pi configuration
+- ✅ Provide setup instructions
+
+**Time:** 15-20 minutes | **Cost:** ~$45-75/month
+
+📖 **[Complete Installation Guide →](INSTALL.md)**
+
+---
+
+### 📋 Prerequisites
+
+Before running the installer, ensure you have:
+
+- **AWS Account** with billing enabled
+- **AWS CLI** configured (`aws configure`)
+- **Terraform** >= 1.5.0
+- **Python** 3.9+
+- **Node.js** 18+ (for dashboards)
+- **Anthropic Claude API key** from [console.anthropic.com](https://console.anthropic.com/)
+
+**Hardware** (for data collection):
+- Raspberry Pi 4 (4GB RAM) or 3B+
+- CJMCU-1293 ECG module
+- 3-lead ECG electrodes
+- 32GB+ microSD card
+
+---
+
+### 🛠️ Manual Deployment (Alternative)
+
+For advanced users who prefer manual control:
+
+<details>
+<summary>Click to expand manual deployment steps</summary>
+
+#### 1. Configure
 
 ```bash
 # Clone repository
@@ -81,7 +119,7 @@ cp terraform.tfvars.example terraform.tfvars
 # - anthropic_api_key (Claude API key)
 ```
 
-### 3. Deploy to AWS
+#### 2. Deploy to AWS
 
 ```bash
 # Return to project root
@@ -96,6 +134,10 @@ cd ../../..
 # - Upload web dashboard to S3
 # - Generate Pi configuration
 ```
+
+</details>
+
+---
 
 ### 4. Setup Raspberry Pi
 
