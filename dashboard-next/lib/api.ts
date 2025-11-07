@@ -1,4 +1,4 @@
-import type { ECGLiveData, ECGAlertsData, ECGHistoryData, ECGWaveform } from '@/types';
+import type { ECGLiveData, ECGAlertsData, ECGHistoryData, ECGWaveform, ExportParams, ExportData } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -146,6 +146,29 @@ export async function fetchHistory(
     return await response.json();
   } catch (error) {
     console.error('Error fetching history:', error);
+    throw error;
+  }
+}
+
+export async function exportData(params: ExportParams): Promise<Blob> {
+  try {
+    const { userId, deviceId, startTime, endTime, format } = params;
+
+    let url = `${API_BASE_URL}/api/export?user_id=${userId}&start=${startTime}&end=${endTime}&format=${format}`;
+    if (deviceId) {
+      url += `&device_id=${deviceId}`;
+    }
+
+    const response = await fetch(url, { cache: 'no-store' });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    // Return the response as a Blob for download
+    return await response.blob();
+  } catch (error) {
+    console.error('Error exporting data:', error);
     throw error;
   }
 }

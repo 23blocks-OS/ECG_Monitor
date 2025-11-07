@@ -76,6 +76,24 @@ function DashboardContent() {
             </div>
           </div>
 
+          <div className="quick-links">
+            <h3>Quick Links</h3>
+            <div className="links-grid">
+              <a href="/dashboard/activities" className="link-card">
+                <h4>📊 Activity Tracking</h4>
+                <p>Upload and view your Garmin and Strava activities</p>
+              </a>
+              <a href="/dashboard/export" className="link-card">
+                <h4>📥 Export Data</h4>
+                <p>Download your ECG data to share with your doctor</p>
+              </a>
+              <a href="/dashboard/activity-map" className="link-card">
+                <h4>🗺️ Activity Map</h4>
+                <p>View your activities on an interactive map</p>
+              </a>
+            </div>
+          </div>
+
           <div className="info-box">
             <h4>🚧 Dashboard Under Construction</h4>
             <p>
@@ -177,11 +195,48 @@ function DashboardContent() {
 
         .user-details,
         .status-card,
+        .quick-links,
         .info-box {
           margin-top: 2rem;
           padding: 1.5rem;
           background: #f8f9fa;
           border-radius: 4px;
+        }
+
+        .links-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .link-card {
+          display: block;
+          padding: 1.5rem;
+          background: white;
+          border-radius: 8px;
+          text-decoration: none;
+          color: inherit;
+          border: 2px solid #e0e0e0;
+          transition: all 0.2s;
+        }
+
+        .link-card:hover {
+          border-color: #0066cc;
+          box-shadow: 0 4px 12px rgba(0, 102, 204, 0.1);
+          transform: translateY(-2px);
+        }
+
+        .link-card h4 {
+          margin: 0 0 0.5rem 0;
+          color: #333;
+          font-size: 1.1rem;
+        }
+
+        .link-card p {
+          margin: 0;
+          color: #666;
+          font-size: 0.9rem;
         }
 
         h3 {
