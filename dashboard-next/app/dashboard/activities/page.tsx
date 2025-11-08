@@ -6,12 +6,14 @@ import ActivityList from '@/components/ActivityList';
 import { getActivities } from '@/lib/activityApi';
 import type { Activity } from '@/types/activity';
 import Link from 'next/link';
+import AIChatSidebar from '@/components/AIChatSidebar';
 
 export default function ActivitiesPage() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // TODO: Get actual user ID from auth context
   const userId = 'demo-user-001';
@@ -140,6 +142,28 @@ export default function ActivitiesPage() {
           </div>
         </div>
       </div>
+
+      {/* AI Chat Sidebar */}
+      <AIChatSidebar
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        context={{
+          patientInfo: {
+            userId: userId,
+          },
+        }}
+      />
+
+      {/* Floating AI Chat Button */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center z-30"
+        title="Ask AI Assistant"
+      >
+        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      </button>
     </div>
   );
 }

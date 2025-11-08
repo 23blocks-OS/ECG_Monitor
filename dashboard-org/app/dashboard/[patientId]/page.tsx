@@ -12,6 +12,7 @@ import { useECGData } from '@/hooks/useECGData';
 import { usePageLoadAnimation } from '@/hooks/useAnimations';
 import { useAuth } from '@/components/AuthWrapper';
 import { Patient } from '@/types';
+import AIChatSidebar from '@/components/AIChatSidebar';
 
 export default function PatientDashboard() {
   const params = useParams();
@@ -19,6 +20,7 @@ export default function PatientDashboard() {
   const patientId = params.patientId as string;
   const { organization } = useAuth();
   const [patient, setPatient] = useState<Patient | null>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Use the patient's device_id to fetch ECG data
   const { liveData, alertsData, isConnected, lastUpdated } = useECGData(patient?.current_device_id || '');
@@ -252,6 +254,36 @@ export default function PatientDashboard() {
           </div>
         </div>
       </div>
+
+      {/* AI Chat Sidebar */}
+      <AIChatSidebar
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        context={{
+          patient: {
+            user_id: patient.user_id,
+            email: patient.email,
+            name: `${patient.first_name} ${patient.last_name}`,
+            age: patient.date_of_birth ? Math.floor((Date.now() - new Date(patient.date_of_birth).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) : undefined,
+            device_id: patient.current_device_id,
+            connection_status: isConnected ? 'connected' : 'disconnected',
+            last_heart_rate: liveData?.metrics.heart_rate_bpm,
+          },
+          liveData: liveData,
+          alerts: alertsData?.alerts,
+        }}
+      />
+
+      {/* Floating AI Chat Button */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="fixed bottom-8 right-8 w-16 h-16 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-full shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center z-30"
+        title="Ask Clinical AI Assistant"
+      >
+        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      </button>
     </div>
   );
 }
