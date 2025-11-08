@@ -9,10 +9,13 @@
 
 import { ProtectedRoute, useAuth } from '@/components/Auth';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import AIChatSidebar from '@/components/AIChatSidebar';
 
 function DashboardContent() {
   const { user, signOut } = useAuth();
   const router = useRouter();
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
@@ -110,6 +113,28 @@ function DashboardContent() {
           </div>
         </div>
       </main>
+
+      {/* AI Chat Sidebar */}
+      <AIChatSidebar
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        context={{
+          patientInfo: {
+            userId: user?.email || 'unknown',
+          },
+        }}
+      />
+
+      {/* Floating AI Chat Button */}
+      <button
+        onClick={() => setIsChatOpen(true)}
+        className="ai-chat-button"
+        title="Ask AI Assistant"
+      >
+        <svg className="chat-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      </button>
 
       <style jsx>{`
         .dashboard {
@@ -305,6 +330,35 @@ function DashboardContent() {
 
         .info-box li {
           margin-bottom: 0.5rem;
+        }
+
+        .ai-chat-button {
+          position: fixed;
+          bottom: 2rem;
+          right: 2rem;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border: none;
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          z-index: 30;
+        }
+
+        .ai-chat-button:hover {
+          transform: scale(1.1);
+          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .chat-icon {
+          width: 28px;
+          height: 28px;
+          color: white;
         }
       `}</style>
     </div>
